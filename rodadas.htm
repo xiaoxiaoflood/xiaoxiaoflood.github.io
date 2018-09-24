@@ -1,0 +1,132 @@
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Rodadas</title>
+		<script type="text/javascript" src="data.min.js"></script>
+		<style type="text/css">
+		  table {
+			font-family: Arial;
+			font-size: 12px;
+			border-collapse: collapse;
+		  }
+		  table td{
+			padding: 0px;
+			text-align: center;
+			border-top: 1px solid gray;
+			border-left: 1px solid gray;
+			line-height: 18px;
+		  }
+		  table th{
+			font-size: 13px;
+			border: 1px solid black;
+			padding: 1px 4px;
+			width: 28px;
+			background: #B0B0B0;
+			color: #252525;
+		  }
+		  table td:first-child{
+			border-left: 1px solid black;
+		  }
+		  table td:nth-child(2){
+			text-align: right;
+			padding-right: 3px;
+		  }
+		  table td:nth-child(3){
+			font-weight: bold;
+		  }
+		  table td:nth-child(4){
+			text-align: left;
+			padding-left: 3px;
+		  }
+		  table td:nth-child(5){
+			border-right: 1px solid black;
+		  }
+		  table tr:last-child{
+			border-bottom: 1px solid black !important;
+		  }
+		  
+		  tr:nth-child(even) {background: #D0D0D0}
+		  tr:nth-child(odd) {background: #F0F0F0}
+		  
+		  input {
+		    height:21px;width:40px;text-align:center;font-family:Arial;font-size:13px;margin-bottom:4px;
+		  }
+	</style>
+	<head>
+	<body>
+		<div id="container" style="display: flex;margin-top: -1px;margin-left: -1px;text-align:center">
+			<div style="width:432px;margin-right:18px" tab="0">
+					<input id="rod" value="1" maxlength="2" type="text" onclick="if(this.value.substring(this.selectionStart, this.selectionEnd) == '') this.select()" onfocus="prv = this.value" onblur="this.selectionStart=0,	this.selectionEnd=0">
+					<input id="ano" value="2018" maxlength="4" type="text" onclick="if(this.value.substring(this.selectionStart, this.selectionEnd) == '') this.select()" onfocus="prv = this.value" onblur="this.selectionStart=0,	this.selectionEnd=0">
+					</select>
+				<table>
+					<thead>
+						<tr>
+							<th title="Ano" colspan="6" style="background: #F2F2F2; font-size: 16px; height: 26px"></th>
+						</tr>
+						<tr>
+							<th style="width: 33px">Data</th>
+							<th style="width: 90px">Mandante</th>
+							<th>Placar</th>
+							<th style="width: 90px">Visitante</th>
+							<th style="width: 120px">Estádio</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<script type="text/javascript">
+			function jgs(rod, ano, tab){
+				tjogos = '';
+				for(i of j){
+					if(i.y == ano){
+						if(i.r == rod){
+							tjogos += '<tr><td>' + i.d + '</td><td ' + (i.gm > i.gv ? 'style="background: #F2F5A9"' : '') + '>' + i.m + '</td><td ' + (i.gm == i.gv ? 'style="background: #F2F5A9"' : '') + '>' + i.gm + ' × ' + i.gv + '</td><td ' + (i.gm < i.gv ? 'style="background: #F2F5A9"' : '') + '>' + i.v + '</td><td>' + i.est + '</td></tr>';
+						}
+					}
+				}
+				document.getElementsByTagName('thead')[tab].getElementsByTagName('th')[0].innerHTML = rod + 'ª rodada – ' + ano;
+				document.getElementsByTagName('tbody')[tab].innerHTML = tjogos;
+			}
+			
+			jgs(1, 2018, 0);
+			
+			getVals = function(e) {
+			  jgs(document.getElementById('rod').value, document.getElementById('ano').value, 0);
+			}
+			
+			rodroda = function(e){
+				var podecrescer = this.id == 'rod' ? (this.value < (parseInt(document.getElementById('ano').value) > 2005 ? 38 : parseInt(document.getElementById('ano').value) > 2004 ? 42 : 46) ? 1 : 0) : (this.value < 2018 ? 1 : 0);
+				var podereduzir = this.value > 1 ? 1 : 0;
+				if(e.type == 'wheel'){
+					e.preventDefault();
+					if(e.deltaY < 0){
+						if(podecrescer) this.value++, getVals(e);
+					} else {
+						if(podereduzir) this.value--, getVals(e);
+					}
+				}
+				else if(e.type == 'keydown'){
+					if(e.keyCode == 38){
+						if(podecrescer) this.value++, getVals(e);
+					} else if(e.keyCode == 40) {
+						if(podereduzir) this.value--, getVals(e);
+					} else if(window.getSelection().toString() == e.target.value){
+						window.getSelection().removeAllRanges()
+					}
+				}
+			}
+			
+			window.onload = function(){
+			  document.getElementById('rod').addEventListener('input', getVals);
+			  document.getElementById('rod').addEventListener('wheel', rodroda);
+			  document.getElementById('rod').addEventListener('keydown', rodroda);
+			  document.getElementById('ano').addEventListener('input', getVals);
+			  document.getElementById('ano').addEventListener('wheel', rodroda);
+			  document.getElementById('ano').addEventListener('keydown', rodroda);
+			}
+		</script>
+	</body>
+</html>

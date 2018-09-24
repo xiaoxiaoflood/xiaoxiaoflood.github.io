@@ -1,0 +1,347 @@
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Pontos Corridos</title>
+		<script type="text/javascript" src="data.min.js"></script>
+		<style type="text/css">
+		  table {
+			font-family: Arial;
+			font-size: 12px;
+			border-collapse: collapse;
+		  }
+		  table td{
+			padding: 0px;
+			text-align: center;
+			border-top: 1px solid gray;
+			border-left: 1px solid gray;
+			line-height: 15px;
+		  }
+		  table th{
+			font-size: 13px;
+			border: 1px solid black;
+			padding: 1px 4px;
+			width: 28px;
+			background: #B0B0B0;
+			color: #252525;
+		  }
+		  table td:first-child{
+			border-left: 1px solid black;
+		  }
+		  table td:nth-child(2), table td:nth-child(4){
+			font-weight: bold;
+			color: #252525;
+			font-size: 13px;
+		  }
+		  table td:nth-child(3){
+			text-align: right;
+			padding-right: 3px;
+		  }
+		  table td:nth-child(4){
+			border: 1px solid black;
+		  }
+		  table td:nth-child(5){
+			text-align: left;
+			padding-left: 3px;
+		  }
+		  table td:nth-child(6){
+			border-right: 1px solid black;
+		  }
+		  table tr:last-child{
+			border-bottom: 1px solid black !important;
+		  }
+		  
+		  tr:nth-child(even) {background: #D0D0D0}
+		  tr:nth-child(odd) {background: #F0F0F0}
+	</style>
+	<head>
+	<body>
+		<div id="container" style="display: flex;margin-top: -1px;margin-left: -1px;text-align:center">
+			<div style="width:432px;margin-right:18px" tab="0">
+					<select id="time" style="width: 115px;margin: 4px 0px 11px 0px">
+					  <option value="América (MG)">América (MG)</option>
+					  <option value="América (RN)">América (RN)</option>
+					  <option value="Atlético (GO)">Atlético (GO)</option>
+					  <option value="Atlético (MG)">Atlético (MG)</option>
+					  <option value="Atlético (PR)">Atlético (PR)</option>
+					  <option value="Avaí">Avaí</option>
+					  <option value="Bahia">Bahia</option>
+					  <option value="Barueri">Barueri</option>
+					  <option value="Botafogo">Botafogo</option>
+					  <option value="Brasiliense">Brasiliense</option>
+					  <option value="Ceará">Ceará</option>
+					  <option value="Chapecoense">Chapecoense</option>
+					  <option value="Corinthians">Corinthians</option>
+					  <option value="Coritiba">Coritiba</option>
+					  <option value="Criciúma">Criciúma</option>
+					  <option value="Cruzeiro" selected>Cruzeiro</option>
+					  <option value="Figueirense">Figueirense</option>
+					  <option value="Flamengo">Flamengo</option>
+					  <option value="Fluminense">Fluminense</option>
+					  <option value="Fortaleza">Fortaleza</option>
+					  <option value="Goiás">Goiás</option>
+					  <option value="Grêmio">Grêmio</option>
+					  <option value="Guarani">Guarani</option>
+					  <option value="Internacional">Internacional</option>
+					  <option value="Ipatinga">Ipatinga</option>
+					  <option value="Joinville">Joinville</option>
+					  <option value="Juventude">Juventude</option>
+					  <option value="Náutico">Náutico</option>
+					  <option value="Palmeiras">Palmeiras</option>
+					  <option value="Paraná">Paraná</option>
+					  <option value="Paysandu">Paysandu</option>
+					  <option value="Ponte Preta">Ponte Preta</option>
+					  <option value="Portuguesa">Portuguesa</option>
+					  <option value="Santa Cruz">Santa Cruz</option>
+					  <option value="Santo André">Santo André</option>
+					  <option value="Santos">Santos</option>
+					  <option value="Sport">Sport</option>
+					  <option value="São Caetano">São Caetano</option>
+					  <option value="São Paulo">São Paulo</option>
+					  <option value="Vasco">Vasco</option>
+					  <option value="Vitória">Vitória</option>
+					</select>
+					<select id="ano" style="width: 55px">
+					  <option value="2018" selected>2018</option>
+					  <option value="2017">2017</option>
+					  <option value="2016">2016</option>
+					  <option value="2015">2015</option>
+					  <option value="2014">2014</option>
+					  <option value="2013">2013</option>
+					  <option value="2012">2012</option>
+					  <option value="2011">2011</option>
+					  <option value="2010">2010</option>
+					  <option value="2009">2009</option>
+					  <option value="2008">2008</option>
+					  <option value="2007">2007</option>
+					  <option value="2006">2006</option>
+					  <option value="2005">2005</option>
+					  <option value="2004">2004</option>
+					  <option value="2003">2003</option>
+					</select>
+				<table>
+					<thead>
+						<tr>
+							<th title="Ano" colspan="6" style="background: #F2F2F2; font-size: 16px; height: 26px"></th>
+						</tr>
+						<tr>
+							<th style="width: 33px">Data</th>
+							<th style="width: 14px" title="Rodada">R</th>
+							<th style="width: 76px">Mandante</th>
+							<th>Placar</th>
+							<th style="width: 76px">Visitante</th>
+							<th style="width: 120px">Estádio</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+			<div style="width:432px;margin-right:18px" tab="1">
+					<select id="time2" style="width: 115px;margin: 4px 0px 11px 0px">
+					  <option value="América (MG)">América (MG)</option>
+					  <option value="América (RN)">América (RN)</option>
+					  <option value="Atlético (GO)">Atlético (GO)</option>
+					  <option value="Atlético (MG)">Atlético (MG)</option>
+					  <option value="Atlético (PR)">Atlético (PR)</option>
+					  <option value="Avaí">Avaí</option>
+					  <option value="Bahia">Bahia</option>
+					  <option value="Barueri">Barueri</option>
+					  <option value="Botafogo">Botafogo</option>
+					  <option value="Brasiliense">Brasiliense</option>
+					  <option value="Ceará">Ceará</option>
+					  <option value="Chapecoense">Chapecoense</option>
+					  <option value="Corinthians">Corinthians</option>
+					  <option value="Coritiba">Coritiba</option>
+					  <option value="Criciúma">Criciúma</option>
+					  <option value="Cruzeiro" selected>Cruzeiro</option>
+					  <option value="Figueirense">Figueirense</option>
+					  <option value="Flamengo">Flamengo</option>
+					  <option value="Fluminense">Fluminense</option>
+					  <option value="Fortaleza">Fortaleza</option>
+					  <option value="Goiás">Goiás</option>
+					  <option value="Grêmio">Grêmio</option>
+					  <option value="Guarani">Guarani</option>
+					  <option value="Internacional">Internacional</option>
+					  <option value="Ipatinga">Ipatinga</option>
+					  <option value="Joinville">Joinville</option>
+					  <option value="Juventude">Juventude</option>
+					  <option value="Náutico">Náutico</option>
+					  <option value="Palmeiras">Palmeiras</option>
+					  <option value="Paraná">Paraná</option>
+					  <option value="Paysandu">Paysandu</option>
+					  <option value="Ponte Preta">Ponte Preta</option>
+					  <option value="Portuguesa">Portuguesa</option>
+					  <option value="Santa Cruz">Santa Cruz</option>
+					  <option value="Santo André">Santo André</option>
+					  <option value="Santos">Santos</option>
+					  <option value="Sport">Sport</option>
+					  <option value="São Caetano">São Caetano</option>
+					  <option value="São Paulo">São Paulo</option>
+					  <option value="Vasco">Vasco</option>
+					  <option value="Vitória">Vitória</option>
+					</select>
+					<select id="ano2" style="width: 55px">
+					  <option value="2018">2018</option>
+					  <option value="2017" selected>2017</option>
+					  <option value="2016">2016</option>
+					  <option value="2015">2015</option>
+					  <option value="2014">2014</option>
+					  <option value="2013">2013</option>
+					  <option value="2012">2012</option>
+					  <option value="2011">2011</option>
+					  <option value="2010">2010</option>
+					  <option value="2009">2009</option>
+					  <option value="2008">2008</option>
+					  <option value="2007">2007</option>
+					  <option value="2006">2006</option>
+					  <option value="2005">2005</option>
+					  <option value="2004">2004</option>
+					  <option value="2003">2003</option>
+					</select>
+				<table>
+					<thead>
+						<tr>
+							<th title="Ano" colspan="6" style="background: #F2F2F2; font-size: 16px; height: 26px"></th>
+						</tr>
+						<tr>
+							<th style="width: 33px">Data</th>
+							<th style="width: 14px" title="Rodada">R</th>
+							<th style="width: 76px">Mandante</th>
+							<th>Placar</th>
+							<th style="width: 76px">Visitante</th>
+							<th style="width: 120px">Estádio</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+			<div>
+				<div style="width:432px;margin-right:18px" tab="2">
+					<select id="time3" style="width: 115px;margin: 4px 0px 11px 0px">
+					  <option value="América (MG)">América (MG)</option>
+					  <option value="América (RN)">América (RN)</option>
+					  <option value="Atlético (GO)">Atlético (GO)</option>
+					  <option value="Atlético (MG)">Atlético (MG)</option>
+					  <option value="Atlético (PR)">Atlético (PR)</option>
+					  <option value="Avaí">Avaí</option>
+					  <option value="Bahia">Bahia</option>
+					  <option value="Barueri">Barueri</option>
+					  <option value="Botafogo">Botafogo</option>
+					  <option value="Brasiliense">Brasiliense</option>
+					  <option value="Ceará">Ceará</option>
+					  <option value="Chapecoense">Chapecoense</option>
+					  <option value="Corinthians">Corinthians</option>
+					  <option value="Coritiba">Coritiba</option>
+					  <option value="Criciúma">Criciúma</option>
+					  <option value="Cruzeiro" selected>Cruzeiro</option>
+					  <option value="Figueirense">Figueirense</option>
+					  <option value="Flamengo">Flamengo</option>
+					  <option value="Fluminense">Fluminense</option>
+					  <option value="Fortaleza">Fortaleza</option>
+					  <option value="Goiás">Goiás</option>
+					  <option value="Grêmio">Grêmio</option>
+					  <option value="Guarani">Guarani</option>
+					  <option value="Internacional">Internacional</option>
+					  <option value="Ipatinga">Ipatinga</option>
+					  <option value="Joinville">Joinville</option>
+					  <option value="Juventude">Juventude</option>
+					  <option value="Náutico">Náutico</option>
+					  <option value="Palmeiras">Palmeiras</option>
+					  <option value="Paraná">Paraná</option>
+					  <option value="Paysandu">Paysandu</option>
+					  <option value="Ponte Preta">Ponte Preta</option>
+					  <option value="Portuguesa">Portuguesa</option>
+					  <option value="Santa Cruz">Santa Cruz</option>
+					  <option value="Santo André">Santo André</option>
+					  <option value="Santos">Santos</option>
+					  <option value="Sport">Sport</option>
+					  <option value="São Caetano">São Caetano</option>
+					  <option value="São Paulo">São Paulo</option>
+					  <option value="Vasco">Vasco</option>
+					  <option value="Vitória">Vitória</option>
+					</select>
+					<select id="ano3" style="width: 55px">
+					  <option value="2018">2018</option>
+					  <option value="2017">2017</option>
+					  <option value="2016" selected>2016</option>
+					  <option value="2015">2015</option>
+					  <option value="2014">2014</option>
+					  <option value="2013">2013</option>
+					  <option value="2012">2012</option>
+					  <option value="2011">2011</option>
+					  <option value="2010">2010</option>
+					  <option value="2009">2009</option>
+					  <option value="2008">2008</option>
+					  <option value="2007">2007</option>
+					  <option value="2006">2006</option>
+					  <option value="2005">2005</option>
+					  <option value="2004">2004</option>
+					  <option value="2003">2003</option>
+					</select>
+				<table>
+					<thead>
+						<tr>
+							<th title="Ano" colspan="6" style="background: #F2F2F2; font-size: 16px; height: 26px"></th>
+						</tr>
+						<tr>
+							<th style="width: 33px">Data</th>
+							<th style="width: 14px" title="Rodada">R</th>
+							<th style="width: 76px">Mandante</th>
+							<th>Placar</th>
+							<th style="width: 76px">Visitante</th>
+							<th style="width: 120px">Estádio</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			function jgs(time, ano, tab){
+				tjogos = '';
+				for(i of j){
+					if(i.y == ano){
+						if(i.m == time){
+							tjogos += '<tr ' + ((i.r == 19 && ano > 2005) || (i.r == 21 && ano == 2005) || (i.r == 23 && ano < 2005) ? 'style="border-bottom: 2px solid gray"' : '') + '><td>' + i.d + '</td><td>' + i.r + '</td><td style="font-weight: bold; color: #0B2161">' + i.m + '</td><td style="background: ' + (i.gm > i.gv ? 'lime' : i.gm == i.gv ? 'yellow' : 'red') + '">' + i.gm + ' × ' + i.gv + '</td><td>' + i.v + '</td><td>' + i.est + '</td></tr>';
+						} else if (i.v == time){
+							tjogos += '<tr ' + ((i.r == 19 && ano > 2005) || (i.r == 21 && ano == 2005) || (i.r == 23 && ano < 2005) ? 'style="border-bottom: 2px solid gray"' : '') + '><td>' + i.d + '</td><td>' + i.r + '</td><td>' + i.m + '</td><td style="background: ' + (i.gm < i.gv ? 'lime' : i.gm == i.gv ? 'yellow' : 'red') + '">' + i.gm + ' × ' + i.gv + '</td><td style="font-weight: bold; color: #0B2161">' + i.v + '</td><td>' + i.est + '</td></tr>';
+						}
+					}
+				}
+				document.getElementsByTagName('thead')[tab].getElementsByTagName('th')[0].innerHTML = time + ' – ' + ano;
+				document.getElementsByTagName('tbody')[tab].innerHTML = tjogos;
+			}
+			
+			jgs('Cruzeiro', 2018, 0);
+			jgs('Cruzeiro', 2017, 1);
+			jgs('Cruzeiro', 2016, 2);
+			
+			oncg = function (e){
+				if(e.type == 'wheel'){
+					if(e.target.selectedIndex + (e.deltaY / 3) < e.target.length && e.target.selectedIndex + (e.deltaY / 3) >= 0)
+						e.target.selectedIndex += e.deltaY / 3;
+					e.preventDefault();
+				}
+				jgs(e.target.parentElement.getElementsByTagName('select')[0].value, e.target.parentElement.getElementsByTagName('select')[1].value, e.target.parentElement.getAttribute('tab'));
+			}
+			
+			window.onload = function(){
+				document.getElementById('time').addEventListener('change', oncg);
+				document.getElementById('time').addEventListener('wheel', oncg);
+				document.getElementById('ano').addEventListener('change', oncg);
+				document.getElementById('ano').addEventListener('wheel', oncg);
+				document.getElementById('time2').addEventListener('change', oncg);
+				document.getElementById('time2').addEventListener('wheel', oncg);
+				document.getElementById('ano2').addEventListener('change', oncg);
+				document.getElementById('ano2').addEventListener('wheel', oncg);
+				document.getElementById('time3').addEventListener('change', oncg);
+				document.getElementById('time3').addEventListener('wheel', oncg);
+				document.getElementById('ano3').addEventListener('change', oncg);
+				document.getElementById('ano3').addEventListener('wheel', oncg);
+			}
+		</script>
+	</body>
+</html>
