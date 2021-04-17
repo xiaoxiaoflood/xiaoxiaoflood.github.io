@@ -57,7 +57,7 @@
 		<div id="container" style="display: flex;margin-top: -1px;margin-left: -1px;text-align:center">
 			<div style="width:432px;margin-right:18px" tab="0">
 					<input id="rod" value="1" maxlength="2" type="text" onclick="if(this.value.substring(this.selectionStart, this.selectionEnd) == '') this.select()" onfocus="prv = this.value" onblur="this.selectionStart=0,	this.selectionEnd=0">
-					<input id="ano" value="2019" maxlength="4" type="text" onclick="if(this.value.substring(this.selectionStart, this.selectionEnd) == '') this.select()" onfocus="prv = this.value" onblur="this.selectionStart=0,	this.selectionEnd=0">
+					<input id="ano" value="2020" maxlength="4" type="text" onclick="if(this.value.substring(this.selectionStart, this.selectionEnd) == '') this.select()" onfocus="prv = this.value" onblur="this.selectionStart=0,	this.selectionEnd=0">
 					</select>
 				<table>
 					<thead>
@@ -91,15 +91,15 @@
 				document.getElementsByTagName('tbody')[tab].innerHTML = tjogos;
 			}
 			
-			jgs(1, 2019, 0);
+			jgs(1, 2020, 0);
 			
 			getVals = function(e) {
 			  jgs(document.getElementById('rod').value, document.getElementById('ano').value, 0);
 			}
 			
 			rodroda = function(e){
-				var podecrescer = this.id == 'rod' ? (this.value < (parseInt(document.getElementById('ano').value) > 2005 ? 38 : parseInt(document.getElementById('ano').value) > 2004 ? 42 : 46) ? 1 : 0) : (this.value < 2019 ? 1 : 0);
-				var podereduzir = this.value > 1 ? 1 : 0;
+				var podecrescer = this.id == 'rod' ? (this.value < (parseInt(document.getElementById('ano').value) > 2005 ? 38 : parseInt(document.getElementById('ano').value) > 2004 ? 42 : 46) ? 1 : 0) : (this.value < 2020 ? 1 : 0);
+				var podereduzir = (this.id == 'rod' && this.value > 1) || this.value > 2003;
 				if(e.type == 'wheel'){
 					e.preventDefault();
 					if(e.deltaY < 0){

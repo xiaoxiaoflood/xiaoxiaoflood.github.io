@@ -4,7 +4,7 @@
         <title>PCs</title>
         <script type="text/javascript" src="data.min.js"></script>
 		<script type="text/javascript">
-			ltimes = ['América (MG)','América (RN)','Atlético (GO)','Atlético (MG)','Athletico (PR)','Avaí','Bahia','Barueri','Botafogo','Brasiliense','Ceará','Chapecoense','Corinthians','Coritiba','Criciúma','Cruzeiro','CSA','Figueirense','Flamengo','Fluminense','Fortaleza','Goiás','Grêmio','Guarani','Internacional','Ipatinga','Joinville','Juventude','Náutico','Palmeiras','Paraná','Paysandu','Ponte Preta','Portuguesa','Santa Cruz','Santo André','Santos','Sport','São Caetano','São Paulo','Vasco','Vitória'];
+			ltimes = ['América (MG)','América (RN)','Atlético (GO)','Atlético (MG)','Athletico (PR)','Avaí','Bahia','Barueri','Botafogo','Brasiliense','Ceará','Chapecoense','Corinthians','Coritiba','Criciúma','Cruzeiro','CSA','Figueirense','Flamengo','Fluminense','Fortaleza','Goiás','Grêmio','Guarani','Internacional','Ipatinga','Joinville','Juventude','Náutico','Palmeiras','Paraná','Paysandu','Ponte Preta','Portuguesa','RB Bragantino','Santa Cruz','Santo André','Santos','Sport','São Caetano','São Paulo','Vasco','Vitória'];
 			posc = -1;
 			seta = {'-1':'↓','1':'↑'};
 			flag = undefined;
@@ -70,11 +70,11 @@
 			  if(atimes.length)	
 				document.getElementById('selects').innerHTML = '<option>' + atimes.sort().join('</option><option>') + '</option>';
 			  else
-			    document.getElementById('selects').innerHTML = '';
+			    document.getElementById('selects').innerHTML = '<option>&nbsp;</option>';
 			  if(adv.length)	
 				document.getElementById('selectsa').innerHTML = '<option>' + adv.sort().join('</option><option>') + '</option>';
 			  else
-			    document.getElementById('selectsa').innerHTML = '';
+			    document.getElementById('selectsa').innerHTML = '<option>&nbsp;</option>';
 			  
 			  // Get slider values
 				slide1 = parseInt( document.getElementById('s1').value );
@@ -341,7 +341,7 @@
 						for(var z in x){
 							if(xiao[n].n == x[z].n) {
 								xiao[n].j -= x[z].j;
-								if(xiao[n].j == 0) {
+								if(xiao[n].j == 0 && 0 /*desativando esse if porque quero comparar diferencial de turno e returno, o que daria jogo = 0 e portanto removeria time da classificacao*/) {
 									xiao.splice(n, 1);
 									continue l1;
 								} else {
@@ -360,21 +360,23 @@
 				}
 			}
 			oncg = function (e){
-				if(e.target.selectedIndex + (e.deltaY / 3) < e.target.length && e.target.selectedIndex + (e.deltaY / 3) >= 0 && ((e.target.id == 's1' && e.target.selectedIndex + (e.deltaY / 3) >= document.getElementById('s2').selectedIndex) || (e.target.id == 's2' && e.target.selectedIndex + (e.deltaY / 3) <= document.getElementById('s1').selectedIndex)))
-					e.target.selectedIndex += e.deltaY / 3;
+        const dir = e.deltaY > 0 ? 1 : -1;
+				if(e.target.selectedIndex + dir < e.target.length && e.target.selectedIndex + dir >= 0 && ((e.target.id == 's1' && e.target.selectedIndex + dir >= document.getElementById('s2').selectedIndex) || (e.target.id == 's2' && e.target.selectedIndex + dir <= document.getElementById('s1').selectedIndex)))
+					e.target.selectedIndex += dir;
 				e.preventDefault();
 				getVals(e);
 			}
 			af = function (e){
+        const dir = e.deltaY > 0 ? 1 : -1;
 				if (document.getElementById('s1').selectedIndex != document.getElementById('s2').selectedIndex) {
-					if (e.deltaY < 0)
+					if (dir === -1)
 						document.getElementById('s1').selectedIndex = document.getElementById('s2').selectedIndex;
 					else
 						document.getElementById('s2').selectedIndex = document.getElementById('s1').selectedIndex;
 				}
-				if(document.getElementById('s1').selectedIndex + (e.deltaY / 3) < document.getElementById('s1').length && document.getElementById('s1').selectedIndex + (e.deltaY / 3) >= 0)
-					document.getElementById('s1').selectedIndex += e.deltaY / 3,
-					document.getElementById('s2').selectedIndex += e.deltaY / 3;
+				if(document.getElementById('s1').selectedIndex + dir < document.getElementById('s1').length && document.getElementById('s1').selectedIndex + dir >= 0)
+					document.getElementById('s1').selectedIndex += dir,
+					document.getElementById('s2').selectedIndex += dir;
 				e.preventDefault();
 				getVals(e);
 			}
@@ -527,6 +529,7 @@
 				<div id="anos" style="width: 315px;text-align:center;font-family:Arial;font-weight:bold;font-size:20px;padding-bottom: 15px">
 					  Anos<br />
 					  <select id="s1" onmouseover="this.style.borderColor = 'black'" onmouseout="this.style.borderColor = 'gray'">
+					  <option value="2020">2020</option>
 					  <option value="2019">2019</option>
 					  <option value="2018">2018</option>
 					  <option value="2017">2017</option>
@@ -547,7 +550,8 @@
 					  </select>
 					  <span id='afix'>&nbsp;a&nbsp;</span>
 					  <select id="s2" onmouseover="this.style.borderColor = 'black'" onmouseout="this.style.borderColor = 'gray'">
-					  <option value="2019" selected>2019</option>
+					  <option value="2020" selected>2020</option>
+					  <option value="2019">2019</option>
 					  <option value="2018">2018</option>
 					  <option value="2017">2017</option>
 					  <option value="2016">2016</option>
@@ -618,9 +622,9 @@
 					<select id="time" size="21" style="width: 120px" multiple>
 					  <option value="América (MG)">América (MG)</option>
 					  <option value="América (RN)">América (RN)</option>
+					  <option value="Athletico (PR)">Athletico (PR)</option>
 					  <option value="Atlético (GO)">Atlético (GO)</option>
 					  <option value="Atlético (MG)">Atlético (MG)</option>
-					  <option value="Athletico (PR)">Athletico (PR)</option>
 					  <option value="Avaí">Avaí</option>
 					  <option value="Bahia">Bahia</option>
 					  <option value="Barueri">Barueri</option>
@@ -650,6 +654,7 @@
 					  <option value="Paysandu">Paysandu</option>
 					  <option value="Ponte Preta">Ponte Preta</option>
 					  <option value="Portuguesa">Portuguesa</option>
+					  <option value="RB Bragantino">RB Bragantino</option>
 					  <option value="Santa Cruz">Santa Cruz</option>
 					  <option value="Santo André">Santo André</option>
 					  <option value="Santos">Santos</option>
@@ -660,6 +665,7 @@
 					  <option value="Vitória">Vitória</option>
 					</select>
 					<select id="selects" size="21" style="width: 120px" disabled>
+            <option>&nbsp;</option>
 					</select>
 				</div>
 				<div id="adversarios" style="width: 400px;text-align:center;font-family:Arial;font-weight:bold;font-size:20px;color:gray;margin-top:12px;float:left;margin-left:100px">
@@ -694,9 +700,9 @@
 					<select id="timea" size="21" style="width: 120px" multiple>
 					  <option value="América (MG)">América (MG)</option>
 					  <option value="América (RN)">América (RN)</option>
+					  <option value="Athletico (PR)">Athletico (PR)</option>
 					  <option value="Atlético (GO)">Atlético (GO)</option>
 					  <option value="Atlético (MG)">Atlético (MG)</option>
-					  <option value="Athletico (PR)">Athletico (PR)</option>
 					  <option value="Avaí">Avaí</option>
 					  <option value="Bahia">Bahia</option>
 					  <option value="Barueri">Barueri</option>
@@ -736,6 +742,7 @@
 					  <option value="Vitória">Vitória</option>
 					</select>
 					<select id="selectsa" size="21" style="width: 120px" disabled>
+            <option>&nbsp;</option>
 					</select>
 				</div>
 				<br />
