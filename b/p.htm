@@ -1,0 +1,806 @@
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>PCs</title>
+        <script type="text/javascript" src="data.min.js"></script>
+		<script type="text/javascript">
+			ltimes = ['ABC', 'América (MG)', 'América (RN)', 'ASA', 'Athletico (PR)', 'Atlético (GO)', 'Atlético (MG)', 'Avaí', 'Bahia', 'Barueri', 'Boa', 'Botafogo', 'Botafogo (SP)', 'Brasil de Pelotas', 'Brasiliense', 'Brusque', 'Campinense', 'Ceará', 'Chapecoense', 'Confiança', 'Corinthians', 'Coritiba', 'CRB', 'Criciúma', 'Cruzeiro', 'CSA', 'Cuiabá', 'Duque de Caxias', 'Figueirense', 'Fortaleza', 'Gama', 'Goiás', 'Guarani', 'Guaratinguetá', 'Icasa', 'Internacional', 'Ipatinga', 'Ituano', 'Joinville', 'Juventude', 'Londrina', 'Luverdense', 'Macaé', 'Marília', 'Mogi Mirim', 'Náutico', 'Oeste', 'Operário (PR)', 'Palmeiras', 'Paraná', 'Paulista', 'Paysandu', 'Ponte Preta', 'Portuguesa', 'RB Bragantino', 'Remo', 'Salgueiro', 'Sampaio Corrêa', 'Santa Cruz', 'Santo André', 'Sport', 'São Bento', 'São Caetano', 'São Raimundo', 'Tupi', 'Vasco', 'Vila Nova','Vitória'];
+			posc = -1;
+			seta = {'-1':'↓','1':'↑'};
+			flag = undefined;
+			flag1 = undefined;
+			flag2 = undefined;
+			flag3 = false;
+			flag4 = false;
+			ctrl = false;
+			selts = new Set();
+			prv = undefined;
+			turno = undefined;
+			atimes = [];
+			adv = [];
+			mando = 1;
+			max = 38;
+			max2 = 38;
+			rodadas = '';
+			rfixas = false;
+			function getVals(e){
+			  if(e.target.id == 'mands'){
+					if(mando != 1){
+						mando = 1;
+						document.querySelector('input[name=mando]:checked').checked = false;
+						document.getElementById('mands').style.color='gray';
+					}
+			  }
+			  else if(e.target.id == 'tims'){
+					atimes = [];
+					while(document.getElementById('time').selectedOptions.length)
+						document.getElementById('time').selectedOptions[0].selected = false;
+					while(document.getElementById('grupos').selectedOptions.length)
+						document.getElementById('grupos').selectedOptions[0].selected = false;
+					document.getElementById('tims').style.color='gray';
+			  }
+			  else if(e.target.id == 'advs'){
+					adv = [];
+					while(document.getElementById('timea').selectedOptions.length)
+						document.getElementById('timea').selectedOptions[0].selected = false;
+					while(document.getElementById('gruposa').selectedOptions.length)
+						document.getElementById('gruposa').selectedOptions[0].selected = false;
+					document.getElementById('advs').style.color='gray';
+			  }
+			  else if(e.target.id == 'r1' || e.target.id == 'r2' || e.target.id == 'fixas' || (e.type == 'click' && e.type != 'button')){
+					if(turno = document.querySelector('input[name=turno]:checked')){
+						turno.checked = false;
+						document.getElementById('turnos').style.color='gray';
+						document.getElementById('rods').style.color='black';
+					}
+			  }
+			  if(e.type == 'input'){
+				if(/[^\d]/.test(e.target.value)) e.target.value = prv;
+				else prv = e.target.value;
+			  }else if(e.type == 'change' && e.target.id == 'fixas' && parseInt(document.getElementById('r1').value) > parseInt(document.getElementById('r2').value)){
+				var tmp = document.getElementById('r1').value;
+				document.getElementById('r1').value = document.getElementById('r2').value;
+				document.getElementById('r2').value = tmp;
+			  }else if((e.type == 'change' && e.target.id == 's1' && e.target.selectedIndex < document.getElementById('s2').selectedIndex) || (e.type == 'change' && e.target.id == 's2' && e.target.selectedIndex > document.getElementById('s1').selectedIndex)) {
+				var aux = document.getElementById('s1').selectedIndex;
+				document.getElementById('s1').selectedIndex = document.getElementById('s2').selectedIndex;
+				document.getElementById('s2').selectedIndex = aux;
+			  }
+			  clearTimeout(flag);
+			  if(atimes.length)	
+				document.getElementById('selects').innerHTML = '<option>' + atimes.sort().join('</option><option>') + '</option>';
+			  else
+			    document.getElementById('selects').innerHTML = '<option>&nbsp;</option>';
+			  if(adv.length)	
+				document.getElementById('selectsa').innerHTML = '<option>' + adv.sort().join('</option><option>') + '</option>';
+			  else
+			    document.getElementById('selectsa').innerHTML = '<option>&nbsp;</option>';
+			  
+			  // Get slider values
+				slide1 = parseInt( document.getElementById('s1').value );
+				slide2 = parseInt( document.getElementById('s2').value );
+			  // Neither slider will clip the other, so make sure we determine which is larger
+			  if( slide1 > slide2 ){ var tmp = slide2; slide2 = slide1; slide1 = tmp; }
+				var exmax = max;
+				var exmax2 = max2;
+				if(rfixas && parseInt(document.getElementById('r1').value) >  parseInt(document.getElementById('r2').value)) document.getElementById('r1').value = parseInt(document.getElementById('r2').value);
+				else if(rfixas && parseInt(document.getElementById('r1').value) ==  parseInt(document.getElementById('r2').value) && parseInt(document.getElementById('r1').value) == exmax) document.getElementById('r1').value = max, document.getElementById('r2').value = max;
+				if(parseInt(document.getElementById('r2').value) > max || document.getElementById('r2').value == exmax) document.getElementById('r2').value = max;
+				rodadas = document.getElementById('r1').value + ':' + document.getElementById('r2').value;
+				flag = setTimeout(function(){cls(j, {anos: slide1 + ':' + slide2, rodadas: rodadas, rfixas: rfixas, turno: turno, mando: mando, times: atimes, adv: adv})}, 100);
+			}
+			rodroda = function(e){
+				var este = this.id == 'r1' ? 0 : 1;
+				var podecrescer = !rfixas ? 1 : este == 0 ? this.value < parseInt(document.getElementById('r2').value) : 1;
+				var podereduzir = !rfixas ? 1 : este == 1 ? this.value > parseInt(document.getElementById('r1').value) : 1;
+				if(e.type == 'wheel'){
+					e.preventDefault();
+					if(e.deltaY < 0){
+						if(this.value < (este == 0 ? max2 : max) && podecrescer) this.value++, getVals(e);
+					} else {
+						if(this.value > 1 && podereduzir) this.value--, getVals(e);
+					}
+				}
+				else if(e.type == 'keydown'){
+					if(e.keyCode == 38){
+						if(this.value < (este == 0 ? max2 : max) && podecrescer) this.value++, getVals(e);
+					} else if(e.keyCode == 40) {
+						if(this.value > 1 && podereduzir) this.value--, getVals(e);
+					} else if(window.getSelection().toString() == e.target.value){
+						window.getSelection().removeAllRanges()
+					}
+				}
+			}
+			selec = function(e){
+				if(this.value.substring(this.selectionStart, this.selectionEnd) != ''){
+					this.selectionStart=0;
+					this.selectionEnd=0;
+					flag1 = 1;
+					flag2 = 1;
+				}else{
+					if(this.id == 'r1') flag1 = undefined;
+					else flag2 = undefined;
+				}
+			}
+			turn = function(e){
+				turno = document.querySelector('input[name=turno]:checked').value;
+				document.getElementById('turnos').style.color='black';
+				document.getElementById('rods').style.color='gray';
+				getVals(e);
+			}
+			mand = function(e){
+				mando = document.querySelector('input[name=mando]:checked').value;
+				document.getElementById('mands').style.color='black';
+				getVals(e);
+			}
+			tim = function(e){
+				var gppos = document.getElementById('grupos').scrollTop;
+				document.getElementById('tims').style.color='black';
+				if(!flag3){
+					atimes = [];
+					for(i of document.getElementById('time').selectedOptions)
+						atimes.push(i.value);
+				}
+				else{
+					flag3 = false;
+				}
+				var i2 = 0;
+				for(i in grp){
+					if(grp[i].every(elem => atimes.indexOf(elem) > -1)){
+						document.getElementById('grupos').options[i2].selected = true;
+					}else{
+						document.getElementById('grupos').options[i2].selected = false;
+					}
+					i2++;
+				}
+				document.getElementById('grupos').scrollTop = gppos;
+				if(atimes.length == 0)
+					document.getElementById('tims').style.color='gray';
+				getVals(e);
+			}
+			grup = function(e){
+				var tmpos = document.getElementById('time').scrollTop;
+				document.getElementById('tims').style.color='black';
+				if (!ctrl)
+					atimes = [];
+				var seltsm = new Set();
+				for(i of this.selectedOptions){
+					Array.prototype.push.apply(atimes, grp[i.value]);
+					seltsm.add(i.value);
+				}
+				atimes = [...new Set(atimes)];//tira repetições
+				if(selts.size) {
+					for(i of selts){
+						if(!seltsm.has(i)){
+							for(var i3 = 0; i3 < grp[i].length; i3++){
+								if((i4 = atimes.indexOf(grp[i][i3])) > -1){
+									atimes.splice(i4,1);
+									i3--;
+								}
+							}
+						}
+					}
+				}
+				selts = new Set();
+				var i2 = 0;
+				for(i of ltimes){
+					if(atimes.indexOf(i) > -1)
+						document.getElementById('time').options[i2].selected = true;
+					else
+						document.getElementById('time').options[i2].selected = false;
+					i2++;
+				}
+				document.getElementById('time').scrollTop = tmpos;
+				flag3 = true;
+				tim(e);
+				getVals(e);
+			}
+			grupc = function(e){
+				ctrl = e.ctrlKey;
+				if(ctrl && e.type == 'mousedown'){
+					for (i of this.selectedOptions)
+						if(i.selected)
+							selts.add(i.value);
+				}
+			}
+			invert = function(e){
+				var tmpos = document.getElementById('time').scrollTop;
+				atimes = [];
+				for(i of document.getElementById('time').options){
+					i.selected = !i.selected;
+					if(i.selected) atimes.push(i.value);
+				}
+				document.getElementById('time').scrollTop = tmpos;
+				flag3 = true;
+				tim(e);
+				getVals(e);
+			}
+			tima = function(e){
+				var gppos = document.getElementById('gruposa').scrollTop;
+				document.getElementById('advs').style.color='black';
+				if(!flag4){
+					adv = [];
+					for(i of document.getElementById('timea').selectedOptions)
+						adv.push(i.value);
+				}
+				else{
+					flag4 = false;
+				}
+				var i2 = 0;
+				for(i in grp){
+					if(grp[i].every(elem => adv.indexOf(elem) > -1)){
+						document.getElementById('gruposa').options[i2].selected = true;
+					}else{
+						document.getElementById('gruposa').options[i2].selected = false;
+					}
+					i2++;
+				}
+				document.getElementById('gruposa').scrollTop = gppos;
+				if(adv.length == 0)
+					adv = [],
+					document.getElementById('advs').style.color='gray';
+				getVals(e);
+			}
+			grupa = function(e){
+				var tmpos = document.getElementById('timea').scrollTop;
+				document.getElementById('advs').style.color='black';
+				if (!ctrl)
+					adv = [];
+				var seltsm = new Set();
+				for(i of this.selectedOptions){
+					Array.prototype.push.apply(adv, grp[i.value]);
+					seltsm.add(i.value);
+				}
+				adv = [...new Set(adv)];//tira repetições
+				if(selts.size) {
+					for(i of selts){
+						if(!seltsm.has(i)){
+							for(var i3 = 0; i3 < grp[i].length; i3++){
+								if((i4 = adv.indexOf(grp[i][i3])) > -1){
+									adv.splice(i4,1);
+									i3--;
+								}
+							}
+						}
+					}
+				}
+				selts = new Set();
+				var i2 = 0;
+				for(i of ltimes){
+					if(adv.indexOf(i) > -1)
+						document.getElementById('timea').options[i2].selected = true;
+					else
+						document.getElementById('timea').options[i2].selected = false;
+					i2++;
+				}
+				document.getElementById('timea').scrollTop = tmpos;
+				flag4 = true;
+				tima(e);
+				getVals(e);
+			}
+			inverta = function(e){
+				var tmpos = document.getElementById('timea').scrollTop;
+				adv = [];
+				for(i of document.getElementById('timea').options){
+					i.selected = !i.selected;
+					if(i.selected) adv.push(i.value);
+				}
+				document.getElementById('timea').scrollTop = tmpos;
+				flag4 = true;
+				tima(e);
+				getVals(e);
+			}
+			merge = function () {
+				if(typeof xiao == 'undefined') {
+					xiao = x;
+				} else {
+					var flag = [];
+					xiao.forEach ( function (w){
+						for(var z in x){
+							if(w.n == x[z].n) {
+								w.p += x[z].p;
+								w.j += x[z].j;
+								w.v += x[z].v;
+								w.e += x[z].e;
+								w.d += x[z].d;
+								w.gm += x[z].gm;
+								w.gs += x[z].gs;
+								w.s += x[z].s;
+								flag[z] = 1;
+								break;
+							}
+						}
+					});
+					for(var n = 0; n < x.length; n++) {
+						if (!flag[n])
+							xiao.push({n:x[n].n,p:x[n].p,j:x[n].j,v:x[n].v,e:x[n].e,d:x[n].d,gm:x[n].gm,gs:x[n].gs,s:x[n].s});
+					}
+				}
+			}
+			subtr = function () {
+				if(typeof xiao != 'undefined') {
+					l1: for(var n = xiao.length - 1; n > -1; n--) {
+						for(var z in x){
+							if(xiao[n].n == x[z].n) {
+								xiao[n].j -= x[z].j;
+								if(xiao[n].j == 0 && 0 /*desativando esse if porque quero comparar diferencial de turno e returno, o que daria jogo = 0 e portanto removeria time da classificacao*/) {
+									xiao.splice(n, 1);
+									continue l1;
+								} else {
+									xiao[n].p -= x[z].p;
+									xiao[n].v -= x[z].v;
+									xiao[n].e -= x[z].e;
+									xiao[n].d -= x[z].d;
+									xiao[n].gm -= x[z].gm;
+									xiao[n].gs -= x[z].gs;
+									xiao[n].s -= x[z].s;
+									continue l1;
+								}
+							}
+						}
+					}//);
+				}
+			}
+			oncg = function (e){
+        const dir = e.deltaY > 0 ? 1 : -1;
+				if(e.target.selectedIndex + dir < e.target.length && e.target.selectedIndex + dir >= 0 && ((e.target.id == 's1' && e.target.selectedIndex + dir >= document.getElementById('s2').selectedIndex) || (e.target.id == 's2' && e.target.selectedIndex + dir <= document.getElementById('s1').selectedIndex)))
+					e.target.selectedIndex += dir;
+				e.preventDefault();
+				getVals(e);
+			}
+			af = function (e){
+        const dir = e.deltaY > 0 ? 1 : -1;
+				if (document.getElementById('s1').selectedIndex != document.getElementById('s2').selectedIndex) {
+					if (dir === -1)
+						document.getElementById('s1').selectedIndex = document.getElementById('s2').selectedIndex;
+					else
+						document.getElementById('s2').selectedIndex = document.getElementById('s1').selectedIndex;
+				}
+				if(document.getElementById('s1').selectedIndex + dir < document.getElementById('s1').length && document.getElementById('s1').selectedIndex + dir >= 0)
+					document.getElementById('s1').selectedIndex += dir,
+					document.getElementById('s2').selectedIndex += dir;
+				e.preventDefault();
+				getVals(e);
+			}
+			window.onload = function(){
+				document.getElementById('r1').addEventListener('input', getVals);
+				document.getElementById('r2').addEventListener('input', getVals);
+				document.getElementById('r1').addEventListener('wheel', rodroda);
+				document.getElementById('r2').addEventListener('wheel', rodroda);
+				document.getElementById('r1').addEventListener('keydown', rodroda);
+				document.getElementById('r2').addEventListener('keydown', rodroda);
+				document.getElementById('s1').addEventListener('wheel', oncg);
+				document.getElementById('s1').addEventListener('change', getVals);
+				document.getElementById('s2').addEventListener('wheel', oncg);
+				document.getElementById('s2').addEventListener('change', getVals);
+				document.getElementById('afix').addEventListener('wheel', af);
+				document.getElementById('r1').addEventListener('mousedown', selec);
+				document.getElementById('r2').addEventListener('mousedown', selec);
+				document.getElementById('fixas').addEventListener('change', function(e){rfixas = this.checked, getVals(e)});
+				document.getElementById('t1').addEventListener('change', turn);
+				document.getElementById('t2').addEventListener('change', turn);
+				document.getElementById('rodadas').addEventListener('click', function(e){if(e.target.id && e.target != this) getVals(e)});
+				document.getElementById('turns').addEventListener('click', getVals);
+				document.getElementById('man').addEventListener('change', mand);
+				document.getElementById('vis').addEventListener('change', mand);
+				document.getElementById('mands').addEventListener('click', getVals);
+				document.getElementById('time').addEventListener('change', tim);
+				document.getElementById('tims').addEventListener('click', getVals);
+				document.getElementById('grupos').addEventListener('change', grup);
+				document.getElementById('grupos').addEventListener('mousedown', grupc);
+				document.getElementById('grupos').addEventListener('mouseup', grupc);
+				document.getElementById('inverter').addEventListener('click', invert);
+				document.getElementById('timea').addEventListener('change', tima);
+				document.getElementById('advs').addEventListener('click', getVals);
+				document.getElementById('gruposa').addEventListener('change', grupa);
+				document.getElementById('gruposa').addEventListener('mousedown', grupc);
+				document.getElementById('gruposa').addEventListener('mouseup', grupc);
+				document.getElementById('invertera').addEventListener('click', inverta);
+				
+				document.getElementById('somar').addEventListener('click', merge);
+				document.getElementById('subtrair').addEventListener('click', subtr);
+				document.getElementById('igual').addEventListener('click', function () {if (typeof xiao != 'undefined') classificacao(xiao.sort(firstBy('p',-1).thenBy('v',-1).thenBy('s',-1).thenBy('gm',-1).thenBy(function(a){return a.n.toUpperCase()})));});
+				document.getElementById('clear').addEventListener('click', function () {xiao = undefined;});
+				document.getElementById('marker').addEventListener('click', function () {
+					for (var n = 0; n < clas.tBodies[0].rows.length; n++) {
+						clas.tBodies[0].rows[n].cells[1].style.backgroundColor = '';
+					}
+				});
+			  
+			 //coloca tabela na memoria, soma com outras e tal, lista de jogos. filtrar tabela por condicao, tipo minimo de jogos. agrupa times na classificacao, tipo pra fazer mg × paulistas
+			}
+			tsort = function(el){
+				for(a of clas.tHead.children[0].children){
+					if(a.innerHTML.match(/↑|↓/)){
+						a.innerHTML = a.innerHTML.slice(0,-1);
+						break;
+					}
+				}
+				if(el.innerHTML != '#' || posc != -1)
+					el.innerHTML += seta[posc];
+			}
+		</script>
+		<style type="text/css">
+		  table {
+			font-family: Arial;
+			font-size: 12px;
+			border-collapse: collapse;
+			border: 1px solid black;
+		  }
+		  table td{
+			padding: 0px;
+			text-align: center;
+			border-right: 1px solid black;
+		  }
+		  table th{
+			font-size: 14px;
+			border: 1px solid black;
+			padding: 2px 4px;
+			width: 28px;
+			background: #B0B0B0;
+		  }
+		  table td:first-child {
+			font-weight: bold;
+			font-size: 15px;
+		  }
+		  /*table td:nth-child(2) {
+			text-align:left;
+		  }*/
+		  tr:nth-child(even) {background: #D0D0D0}
+		  tr:nth-child(odd) {background: #F0F0F0}
+		  #s1, #s2 {
+			font-size:20px;
+			-moz-appearance: none;
+			border:1px solid gray;
+			width: 56px;margin: 10px 0px 11px 0px;
+			font-family:Arial;
+			font-weight:bold;
+			color: blue;
+			padding: 1px
+		  }
+}
+		</style>
+    <head>
+    <body>
+		<div id="container" style="display: flex;margin-top: -1px;margin-left: -1px">
+			<div id="esquerda" style="margin-right:17px">
+				<table id="clas">
+					<thead>
+						<tr>
+							<th title="Posição" onclick="if(typeof xiao !== 'undefined') x = xiao;classificacao(x.sort(firstBy('p',posc*=-1).thenBy('v',posc).thenBy('s',posc).thenBy('gm',posc).thenBy(function(a){return a.n.toUpperCase()})));tsort(this);">#</th>
+							<th style="width: 95px" onclick="if(typeof xiao !== 'undefined') x = xiao;classificacao(x.sort(firstBy(function(a){return a.n.toUpperCase()}, posc*=-1)));tsort(this);">Time</th>
+							<th title="Pontos" onclick="if(typeof xiao !== 'undefined') x = xiao;classificacao(x.sort(firstBy('p',posc*=-1).thenBy('v',posc).thenBy('s',posc).thenBy('gm',posc).thenBy(function(a){return a.n.toUpperCase()})));tsort(this);">Pts</th>
+							<th title="Jogos" onclick="if(typeof xiao !== 'undefined') x = xiao;classificacao(x.sort(firstBy('j',posc*=-1).thenBy('p',-1).thenBy('v',-1).thenBy('s',-1).thenBy('gm',-1).thenBy(function(a){return a.n.toUpperCase()})));tsort(this);">J</th>
+							<th title="Vitórias" onclick="if(typeof xiao !== 'undefined') x = xiao;classificacao(x.sort(firstBy('v',posc*=-1).thenBy('p',posc).thenBy('s',posc).thenBy('gm',posc).thenBy(function(a){return a.n.toUpperCase()})));tsort(this);">V</th>
+							<th title="Empates" onclick="if(typeof xiao !== 'undefined') x = xiao;classificacao(x.sort(firstBy('e',posc*=-1).thenBy('p',-1).thenBy('v',-1).thenBy('s',-1).thenBy('gm',-1).thenBy(function(a){return a.n.toUpperCase()})));tsort(this);">E</th>
+							<th title="Derrotas" onclick="if(typeof xiao !== 'undefined') x = xiao;classificacao(x.sort(firstBy('d',posc*=-1).thenBy('p',posc).thenBy('v',posc).thenBy('s',posc).thenBy('gm',posc).thenBy(function(a){return a.n.toUpperCase()})));tsort(this);">D</th>
+							<th title="Gols Pró" onclick="if(typeof xiao !== 'undefined') x = xiao;classificacao(x.sort(firstBy('gm',posc*=-1).thenBy('p',posc).thenBy('v',posc).thenBy('s',posc).thenBy(function(a){return a.n.toUpperCase()})));tsort(this);">GP</th>
+							<th title="Gols Contra" onclick="if(typeof xiao !== 'undefined') x = xiao;classificacao(x.sort(firstBy('gs',posc*=-1).thenBy('p',posc).thenBy('v',posc).thenBy('s',posc).thenBy('gm',posc).thenBy(function(a){return a.n.toUpperCase()})));tsort(this);">GC</th>
+							<th title="Saldo de Gols" onclick="if(typeof xiao !== 'undefined') x = xiao;classificacao(x.sort(firstBy('s',posc*=-1).thenBy('p',posc).thenBy('v',posc).thenBy('gm',posc).thenBy(function(a){return a.n.toUpperCase()})));tsort(this);">SG</th>
+							<th title="Aproveitamento de pontos" style="width: 35px" onclick="if(typeof xiao !== 'undefined') x = xiao;classificacao(x.sort(firstBy(function(a){return (a.p / (a.j * 3))},posc*=-1).thenBy('p',posc).thenBy('v',posc).thenBy('s',posc).thenBy('gm',posc).thenBy(function(a){return a.n.toUpperCase()})));tsort(this);">%</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+					<tfoot>
+						<tr>
+							<th title="Posição">#</th>
+							<th>Time</th>
+							<th title="Pontos">Pts</th>
+							<th title="Jogos">J</th>
+							<th title="Vitórias">V</th>
+							<th title="Empates">E</th>
+							<th title="Derrotas">D</th>
+							<th title="Gols Pró">GP</th>
+							<th title="Gols Contra">GC</th>
+							<th title="Saldo de Gols">SG</th>
+							<th title="Aproveitamento de pontos">%</th>
+						</tr>
+					</tfoot>
+				</table>
+				<br />
+				<div style="text-align:center;">
+					<input id="somar" type="button" value="+">
+					<input id="subtrair" type="button" value="-">
+					<input id="igual" type="button" value="=">
+					&nbsp;&nbsp;&nbsp;<input id="clear" type="button" value="C">
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="marker" type="button" value="M">
+				</div>
+			</div>
+			<div id="direita">
+				<div id="anos" style="width: 315px;text-align:center;font-family:Arial;font-weight:bold;font-size:20px;padding-bottom: 15px">
+					  Anos<br />
+					  <select id="s1" onmouseover="this.style.borderColor = 'black'" onmouseout="this.style.borderColor = 'gray'">
+					  <option value="2021">2021</option>
+					  <option value="2020">2020</option>
+					  <option value="2019">2019</option>
+					  <option value="2018">2018</option>
+					  <option value="2017">2017</option>
+					  <option value="2016">2016</option>
+					  <option value="2015">2015</option>
+					  <option value="2014">2014</option>
+					  <option value="2013">2013</option>
+					  <option value="2012">2012</option>
+					  <option value="2011">2011</option>
+					  <option value="2010">2010</option>
+					  <option value="2009">2009</option>
+					  <option value="2008">2008</option>
+					  <option value="2007">2007</option>
+					  <option value="2006" selected>2006</option>
+					  </select>
+					  <span id='afix'>&nbsp;a&nbsp;</span>
+					  <select id="s2" onmouseover="this.style.borderColor = 'black'" onmouseout="this.style.borderColor = 'gray'">
+					  <option value="2021" selected>2021</option>
+					  <option value="2020">2020</option>
+					  <option value="2019">2019</option>
+					  <option value="2018">2018</option>
+					  <option value="2017">2017</option>
+					  <option value="2016">2016</option>
+					  <option value="2015">2015</option>
+					  <option value="2014">2014</option>
+					  <option value="2013">2013</option>
+					  <option value="2012">2012</option>
+					  <option value="2011">2011</option>
+					  <option value="2010">2010</option>
+					  <option value="2009">2009</option>
+					  <option value="2008">2008</option>
+					  <option value="2007">2007</option>
+					  <option value="2006">2006</option>
+					  </select>
+				</div>
+				<div id="rodadas" style="width: 315px;text-align:center;font-family:Arial;font-weight:bold;font-size:20px;float:left;margin-top:10px">
+					  <span id="rods">Rodadas</span><br />
+					  <input id="r1" value="1" maxlength="2" type="text" style="margin-top:10px;width:40px;text-align:center;font-family:Arial;font-weight:bold;font-size:18px;color:blue" onclick="if(!flag1 && this.value.substring(this.selectionStart, this.selectionEnd) == '') this.select()" onfocus="prv = this.value" onblur="this.selectionStart=0,	this.selectionEnd=0">
+					  &nbsp;a&nbsp;
+					  <input id="r2" value="38" maxlength="2" type="text" style="width:40px;text-align:center;font-family:Arial;font-weight:bold;font-size:18px;color:blue;margin-bottom:8px" onclick="if(!flag2 && this.value.substring(this.selectionStart, this.selectionEnd) == '') this.select()" onfocus="prv = this.value" onblur="this.selectionStart=0,	this.selectionEnd=0"><br />
+					  <label style="font-size:16px"><input type="checkbox" id="fixas"> Fixas</label>
+				</div>
+				<div id="turnos" style="width: 280px;text-align:center;font-family:Arial;font-weight:bold;font-size:20px;float:left;color:gray;margin-top:10px">
+					<span id="turns">Turnos</span><br />
+					<label style="font-size:18px;color:blue;display: inline-block; width: 145px; text-align: left;"><input id="t1" type="radio" name="turno" value="1" style="margin-top:12px;width:40px"> Turno</label>
+					<br />
+					<label style="font-size:18px;color:blue;display: inline-block; width: 145px; text-align: left;"><input id="t2" type="radio" name="turno" value="2" style="margin-top:10px;width:40px"> Returno</label>
+				</div>
+				<div id="mandos" style="width: 315px;text-align:center;font-family:Arial;font-weight:bold;font-size:20px;color:gray;margin-top:133px">
+					<span id="mands">Mandos</span><br />
+					<label style="font-size:18px;color:blue;display: inline-block; width: 170px; text-align: left;"><input id="man" type="radio" name="mando" value="0" style="margin-top:12px;width:40px"> Mandante</label>
+					<br />
+					<label style="font-size:18px;color:blue;display: inline-block; width: 170px; text-align: left;"><input id="vis" type="radio" name="mando" value="2" style="margin-top:10px;width:40px"> Visitante</label>
+				</div>
+				<br />
+				<div id="times" style="width: 400px;text-align:center;font-family:Arial;font-weight:bold;font-size:20px;color:gray;margin-top:12px;float:left">
+					<span id="tims">Times</span><br />
+					<select id="grupos" size="21" style="margin-top:12px;width: 120px" multiple>
+					  <option value="g12">G12</option>
+					  <option value="elite">&nbsp;&nbsp;&nbsp;&nbsp;Elite</option>
+					  <option value="co">Centro-Oeste</option>
+					  <option value="go">&nbsp;&nbsp;&nbsp;&nbsp;GO</option>
+					  <option value="df">&nbsp;&nbsp;&nbsp;&nbsp;DF</option>
+					  <option value="mt">&nbsp;&nbsp;&nbsp;&nbsp;MT</option>
+					  <option value="ne">Nordeste</option>
+					  <option value="al">&nbsp;&nbsp;&nbsp;&nbsp;AL</option>
+					  <option value="al2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AL2</option>
+					  <option value="ba">&nbsp;&nbsp;&nbsp;&nbsp;BA</option>
+					  <option value="ce">&nbsp;&nbsp;&nbsp;&nbsp;CE</option>
+					  <option value="ce2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CE2</option>
+					  <option value="ma">&nbsp;&nbsp;&nbsp;&nbsp;MA</option>
+					  <option value="pb">&nbsp;&nbsp;&nbsp;&nbsp;PB</option>
+					  <option value="pe">&nbsp;&nbsp;&nbsp;&nbsp;PE</option>
+					  <option value="pe3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PE3</option>
+					  <option value="rn">&nbsp;&nbsp;&nbsp;&nbsp;RN</option>
+					  <option value="se">&nbsp;&nbsp;&nbsp;&nbsp;SE</option>
+					  <option value="n">Norte</option>
+					  <option value="am">&nbsp;&nbsp;&nbsp;&nbsp;AM</option>
+					  <option value="pa">&nbsp;&nbsp;&nbsp;&nbsp;PA</option>
+					  <option value="sd">Sudeste</option>
+					  <option value="mg">&nbsp;&nbsp;&nbsp;&nbsp;MG</option>
+					  <option value="mg2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MG2</option>
+					  <option value="rj">&nbsp;&nbsp;&nbsp;&nbsp;RJ</option>
+					  <option value="rj4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RJ4</option>
+					  <option value="sp">&nbsp;&nbsp;&nbsp;&nbsp;SP</option>
+					  <option value="sp4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SP4</option>
+					  <option value="s">Sul</option>
+					  <option value="pr">&nbsp;&nbsp;&nbsp;&nbsp;PR</option>
+					  <option value="pr2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR2</option>
+					  <option value="rs">&nbsp;&nbsp;&nbsp;&nbsp;RS</option>
+					  <option value="rs2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RS2</option>
+					  <option value="sc">&nbsp;&nbsp;&nbsp;&nbsp;SC</option>
+					</select>
+					<select id="time" size="21" style="width: 120px" multiple>
+					  <option value="ABC">ABC</option>
+					  <option value="América (MG)">América (MG)</option>
+					  <option value="América (RN)">América (RN)</option>
+					  <option value="ASA">ASA</option>
+					  <option value="Athletico (PR)">Athletico (PR)</option>
+					  <option value="Atlético (GO)">Atlético (GO)</option>
+					  <option value="Atlético (MG)">Atlético (MG)</option>
+					  <option value="Avaí">Avaí</option>
+					  <option value="Bahia">Bahia</option>
+					  <option value="Barueri">Barueri</option>
+					  <option value="Boa">Boa</option>
+					  <option value="Botafogo">Botafogo</option>
+					  <option value="Botafogo (SP)">Botafogo (SP)</option>
+					  <option value="Brasil de Pelotas">Brasil de Pelotas</option>
+					  <option value="Brasiliense">Brasiliense</option>
+					  <option value="Brusque">Brusque</option>
+					  <option value="Campinense">Campinense</option>
+					  <option value="Ceará">Ceará</option>
+					  <option value="Chapecoense">Chapecoense</option>
+					  <option value="Confiança">Confiança</option>
+					  <option value="Corinthians">Corinthians</option>
+					  <option value="Coritiba">Coritiba</option>
+					  <option value="CRB">CRB</option>
+					  <option value="Criciúma">Criciúma</option>
+					  <option value="Cruzeiro">Cruzeiro</option>
+					  <option value="CSA">CSA</option>
+					  <option value="Cuiabá">Cuiabá</option>
+					  <option value="Duque de Caxias">Duque de Caxias</option>
+					  <option value="Figueirense">Figueirense</option>
+					  <option value="Fortaleza">Fortaleza</option>
+					  <option value="Gama">Gama</option>
+					  <option value="Goiás">Goiás</option>
+					  <option value="Guarani">Guarani</option>
+					  <option value="Guaratinguetá">Guaratinguetá</option>
+					  <option value="Icasa">Icasa</option>
+					  <option value="Internacional">Internacional</option>
+					  <option value="Ipatinga">Ipatinga</option>
+					  <option value="Ituano">Ituano</option>
+					  <option value="Joinville">Joinville</option>
+					  <option value="Juventude">Juventude</option>
+					  <option value="Londrina">Londrina</option>
+					  <option value="Luverdense">Luverdense</option>
+					  <option value="Macaé">Macaé</option>
+					  <option value="Marília">Marília</option>
+					  <option value="Mogi Mirim">Mogi Mirim</option>
+					  <option value="Náutico">Náutico</option>
+					  <option value="Oeste">Oeste</option>
+					  <option value="Operário (PR)">Operário (PR)</option>
+					  <option value="Palmeiras">Palmeiras</option>
+					  <option value="Paraná">Paraná</option>
+					  <option value="Paulista">Paulista</option>
+					  <option value="Paysandu">Paysandu</option>
+					  <option value="Ponte Preta">Ponte Preta</option>
+					  <option value="Portuguesa">Portuguesa</option>
+					  <option value="RB Bragantino">RB Bragantino</option>
+					  <option value="Remo">Remo</option>
+					  <option value="Salgueiro">Salgueiro</option>
+					  <option value="Sampaio Corrêa">Sampaio Corrêa</option>
+					  <option value="Santa Cruz">Santa Cruz</option>
+					  <option value="Santo André">Santo André</option>
+					  <option value="Sport">Sport</option>
+					  <option value="São Bento">São Bento</option>
+					  <option value="São Caetano">São Caetano</option>
+					  <option value="São Raimundo">São Raimundo</option>
+					  <option value="Tupi">Tupi</option>
+					  <option value="Vasco">Vasco</option>
+					  <option value="Vila Nova">Vila Nova</option>
+					  <option value="Vitória">Vitória</option>
+					</select>
+					<select id="selects" size="21" style="width: 120px" disabled>
+            <option>&nbsp;</option>
+					</select>
+				</div>
+				<div id="adversarios" style="width: 400px;text-align:center;font-family:Arial;font-weight:bold;font-size:20px;color:gray;margin-top:12px;float:left;margin-left:100px">
+					<span id="advs">Adversários</span><br />
+					<select id="gruposa" size="21" style="margin-top:12px;width: 120px" multiple>
+					  <option value="g12">G12</option>
+					  <option value="elite">&nbsp;&nbsp;&nbsp;&nbsp;Elite</option>
+					  <option value="co">Centro-Oeste</option>
+					  <option value="go">&nbsp;&nbsp;&nbsp;&nbsp;GO</option>
+					  <option value="df">&nbsp;&nbsp;&nbsp;&nbsp;DF</option>
+					  <option value="mt">&nbsp;&nbsp;&nbsp;&nbsp;MT</option>
+					  <option value="ne">Nordeste</option>
+					  <option value="al">&nbsp;&nbsp;&nbsp;&nbsp;AL</option>
+					  <option value="al2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AL2</option>
+					  <option value="ba">&nbsp;&nbsp;&nbsp;&nbsp;BA</option>
+					  <option value="ce">&nbsp;&nbsp;&nbsp;&nbsp;CE</option>
+					  <option value="ce2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CE2</option>
+					  <option value="ma">&nbsp;&nbsp;&nbsp;&nbsp;MA</option>
+					  <option value="pb">&nbsp;&nbsp;&nbsp;&nbsp;PB</option>
+					  <option value="pe">&nbsp;&nbsp;&nbsp;&nbsp;PE</option>
+					  <option value="pe3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PE3</option>
+					  <option value="rn">&nbsp;&nbsp;&nbsp;&nbsp;RN</option>
+					  <option value="se">&nbsp;&nbsp;&nbsp;&nbsp;SE</option>
+					  <option value="n">Norte</option>
+					  <option value="am">&nbsp;&nbsp;&nbsp;&nbsp;AM</option>
+					  <option value="pa">&nbsp;&nbsp;&nbsp;&nbsp;PA</option>
+					  <option value="sd">Sudeste</option>
+					  <option value="mg">&nbsp;&nbsp;&nbsp;&nbsp;MG</option>
+					  <option value="mg2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MG2</option>
+					  <option value="rj">&nbsp;&nbsp;&nbsp;&nbsp;RJ</option>
+					  <option value="rj4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RJ4</option>
+					  <option value="sp">&nbsp;&nbsp;&nbsp;&nbsp;SP</option>
+					  <option value="sp4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SP4</option>
+					  <option value="s">Sul</option>
+					  <option value="pr">&nbsp;&nbsp;&nbsp;&nbsp;PR</option>
+					  <option value="pr2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PR2</option>
+					  <option value="rs">&nbsp;&nbsp;&nbsp;&nbsp;RS</option>
+					  <option value="rs2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RS2</option>
+					  <option value="sc">&nbsp;&nbsp;&nbsp;&nbsp;SC</option>
+					</select>
+					<select id="timea" size="21" style="width: 120px" multiple>
+					  <option value="ABC">ABC</option>
+					  <option value="América (MG)">América (MG)</option>
+					  <option value="América (RN)">América (RN)</option>
+					  <option value="ASA">ASA</option>
+					  <option value="Athletico (PR)">Athletico (PR)</option>
+					  <option value="Atlético (GO)">Atlético (GO)</option>
+					  <option value="Atlético (MG)">Atlético (MG)</option>
+					  <option value="Avaí">Avaí</option>
+					  <option value="Bahia">Bahia</option>
+					  <option value="Barueri">Barueri</option>
+					  <option value="Boa">Boa</option>
+					  <option value="Botafogo">Botafogo</option>
+					  <option value="Botafogo (SP)">Botafogo (SP)</option>
+					  <option value="Brasil de Pelotas">Brasil de Pelotas</option>
+					  <option value="Brasiliense">Brasiliense</option>
+					  <option value="Brusque">Brusque</option>
+					  <option value="Campinense">Campinense</option>
+					  <option value="Ceará">Ceará</option>
+					  <option value="Chapecoense">Chapecoense</option>
+					  <option value="Confiança">Confiança</option>
+					  <option value="Corinthians">Corinthians</option>
+					  <option value="Coritiba">Coritiba</option>
+					  <option value="CRB">CRB</option>
+					  <option value="Criciúma">Criciúma</option>
+					  <option value="Cruzeiro">Cruzeiro</option>
+					  <option value="CSA">CSA</option>
+					  <option value="Cuiabá">Cuiabá</option>
+					  <option value="Duque de Caxias">Duque de Caxias</option>
+					  <option value="Figueirense">Figueirense</option>
+					  <option value="Fortaleza">Fortaleza</option>
+					  <option value="Gama">Gama</option>
+					  <option value="Goiás">Goiás</option>
+					  <option value="Guarani">Guarani</option>
+					  <option value="Guaratinguetá">Guaratinguetá</option>
+					  <option value="Icasa">Icasa</option>
+					  <option value="Internacional">Internacional</option>
+					  <option value="Ipatinga">Ipatinga</option>
+					  <option value="Ituano">Ituano</option>
+					  <option value="Joinville">Joinville</option>
+					  <option value="Juventude">Juventude</option>
+					  <option value="Londrina">Londrina</option>
+					  <option value="Luverdense">Luverdense</option>
+					  <option value="Macaé">Macaé</option>
+					  <option value="Marília">Marília</option>
+					  <option value="Mogi Mirim">Mogi Mirim</option>
+					  <option value="Náutico">Náutico</option>
+					  <option value="Oeste">Oeste</option>
+					  <option value="Operário (PR)">Operário (PR)</option>
+					  <option value="Palmeiras">Palmeiras</option>
+					  <option value="Paraná">Paraná</option>
+					  <option value="Paulista">Paulista</option>
+					  <option value="Paysandu">Paysandu</option>
+					  <option value="Ponte Preta">Ponte Preta</option>
+					  <option value="Portuguesa">Portuguesa</option>
+					  <option value="RB Bragantino">RB Bragantino</option>
+					  <option value="Remo">Remo</option>
+					  <option value="Salgueiro">Salgueiro</option>
+					  <option value="Sampaio Corrêa">Sampaio Corrêa</option>
+					  <option value="Santa Cruz">Santa Cruz</option>
+					  <option value="Santo André">Santo André</option>
+					  <option value="Sport">Sport</option>
+					  <option value="São Bento">São Bento</option>
+					  <option value="São Caetano">São Caetano</option>
+					  <option value="São Raimundo">São Raimundo</option>
+					  <option value="Tupi">Tupi</option>
+					  <option value="Vasco">Vasco</option>
+					  <option value="Vila Nova">Vila Nova</option>
+					  <option value="Vitória">Vitória</option>
+					</select>
+					<select id="selectsa" size="21" style="width: 120px" disabled>
+            <option>&nbsp;</option>
+					</select>
+				</div>
+				<br />
+				<div style="margin-left:120px;width:160px;text-align:center;margin-top:3px;float:left">
+					<input id="inverter" type="button" value="Inverter seleção">
+				</div>
+				<div style="margin-left:340px;width:160px;text-align:center;margin-top:3px;float:left">
+					<input id="invertera" type="button" value="Inverter seleção">
+				</div>
+			</div>
+		</div>
+    </body>
+    <script type="text/javascript" src="fun.js"></script>
+</html>
