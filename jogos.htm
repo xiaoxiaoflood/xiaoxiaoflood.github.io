@@ -5,8 +5,8 @@
 		<script type="text/javascript" src="data.min.js"></script>
 		<style type="text/css">
 		  table {
-			font-family: Arial;
-			font-size: 12px;
+			font-family: Verdana;
+			font-size: 11.5px;
 			border-collapse: collapse;
 		  }
 		  table td{
@@ -14,7 +14,6 @@
 			text-align: center;
 			border-top: 1px solid gray;
 			border-left: 1px solid gray;
-			line-height: 15px;
 		  }
 		  table th{
 			font-size: 13px;
@@ -24,6 +23,9 @@
 			background: #B0B0B0;
 			color: #252525;
 		  }
+      table thead tr:first-child {
+        font-family: Liberation Sans, Arial;
+      }
 		  table td:first-child{
 			border-left: 1px solid black;
 		  }
@@ -38,6 +40,8 @@
 		  }
 		  table td:nth-child(4){
 			border: 1px solid black;
+      font-family: Liberation Sans, Arial;
+      font-size: 14px;
 		  }
 		  table td:nth-child(5){
 			text-align: left;
@@ -57,7 +61,7 @@
 	<body>
 		<div id="container" style="display: flex;margin-top: -1px;margin-left: -1px;text-align:center">
 			<div style="width:432px;margin-right:18px" tab="0">
-					<select id="time" style="width: 115px;margin: 4px 0px 11px 0px">
+					<select id="time" style="width: 145px;margin: 4px 0px 11px 0px">
 					  <option value="América (MG)">América (MG)</option>
 					  <option value="América (RN)">América (RN)</option>
 					  <option value="Athletico (PR)">Athletico (PR)</option>
@@ -103,7 +107,95 @@
 					  <option value="Vasco">Vasco</option>
 					  <option value="Vitória">Vitória</option>
 					</select>
-					<select id="ano" style="width: 55px">
+					<select id="ano" style="width: 60px">
+					  <option value="2022" selected>2022</option>
+					  <option value="2021">2021</option>
+					  <option value="2020">2020</option>
+					  <option value="2019">2019</option>
+					  <option value="2018">2018</option>
+					  <option value="2017">2017</option>
+					  <option value="2016">2016</option>
+					  <option value="2015">2015</option>
+					  <option value="2014">2014</option>
+					  <option value="2013">2013</option>
+					  <option value="2012">2012</option>
+					  <option value="2011">2011</option>
+					  <option value="2010">2010</option>
+					  <option value="2009">2009</option>
+					  <option value="2008">2008</option>
+					  <option value="2007">2007</option>
+					  <option value="2006">2006</option>
+					  <option value="2005">2005</option>
+					  <option value="2004">2004</option>
+					  <option value="2003">2003</option>
+					</select>
+				<table>
+					<thead>
+						<tr>
+							<th title="Ano" colspan="6" style="background: #F2F2F2; font-size: 16px; height: 26px"></th>
+						</tr>
+						<tr>
+							<th style="width: 33px">Data</th>
+							<th style="width: 14px" title="Rodada">R</th>
+							<th style="width: 100px">Mandante</th>
+							<th>Placar</th>
+							<th style="width: 100px">Visitante</th>
+							<th style="width: 120px">Estádio</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+			<div style="width:432px;margin-right:18px" tab="1">
+					<select id="time2" style="width: 145px;margin: 4px 0px 11px 0px">
+					  <option value="América (MG)">América (MG)</option>
+					  <option value="América (RN)">América (RN)</option>
+					  <option value="Athletico (PR)">Athletico (PR)</option>
+					  <option value="Atlético (GO)">Atlético (GO)</option>
+					  <option value="Atlético (MG)">Atlético (MG)</option>
+					  <option value="Avaí">Avaí</option>
+					  <option value="Bahia">Bahia</option>
+					  <option value="Barueri">Barueri</option>
+					  <option value="Botafogo">Botafogo</option>
+					  <option value="Brasiliense">Brasiliense</option>
+					  <option value="Ceará">Ceará</option>
+					  <option value="Chapecoense">Chapecoense</option>
+					  <option value="Corinthians">Corinthians</option>
+					  <option value="Coritiba">Coritiba</option>
+					  <option value="Criciúma">Criciúma</option>
+					  <option value="Cruzeiro" selected>Cruzeiro</option>
+					  <option value="CSA">CSA</option>
+					  <option value="Cuiabá">Cuiabá</option>
+					  <option value="Figueirense">Figueirense</option>
+					  <option value="Flamengo">Flamengo</option>
+					  <option value="Fluminense">Fluminense</option>
+					  <option value="Fortaleza">Fortaleza</option>
+					  <option value="Goiás">Goiás</option>
+					  <option value="Grêmio">Grêmio</option>
+					  <option value="Guarani">Guarani</option>
+					  <option value="Internacional">Internacional</option>
+					  <option value="Ipatinga">Ipatinga</option>
+					  <option value="Joinville">Joinville</option>
+					  <option value="Juventude">Juventude</option>
+					  <option value="Náutico">Náutico</option>
+					  <option value="Palmeiras">Palmeiras</option>
+					  <option value="Paraná">Paraná</option>
+					  <option value="Paysandu">Paysandu</option>
+					  <option value="Ponte Preta">Ponte Preta</option>
+					  <option value="Portuguesa">Portuguesa</option>
+					  <option value="RB Bragantino">RB Bragantino</option>
+					  <option value="Santa Cruz">Santa Cruz</option>
+					  <option value="Santo André">Santo André</option>
+					  <option value="Santos">Santos</option>
+					  <option value="Sport">Sport</option>
+					  <option value="São Caetano">São Caetano</option>
+					  <option value="São Paulo">São Paulo</option>
+					  <option value="Vasco">Vasco</option>
+					  <option value="Vitória">Vitória</option>
+					</select>
+					<select id="ano2" style="width: 60px">
+					  <option value="2022">2022</option>
 					  <option value="2021" selected>2021</option>
 					  <option value="2020">2020</option>
 					  <option value="2019">2019</option>
@@ -132,9 +224,9 @@
 						<tr>
 							<th style="width: 33px">Data</th>
 							<th style="width: 14px" title="Rodada">R</th>
-							<th style="width: 76px">Mandante</th>
+							<th style="width: 100px">Mandante</th>
 							<th>Placar</th>
-							<th style="width: 76px">Visitante</th>
+							<th style="width: 100px">Visitante</th>
 							<th style="width: 120px">Estádio</th>
 						</tr>
 					</thead>
@@ -142,8 +234,9 @@
 					</tbody>
 				</table>
 			</div>
-			<div style="width:432px;margin-right:18px" tab="1">
-					<select id="time2" style="width: 115px;margin: 4px 0px 11px 0px">
+			<div>
+				<div style="width:432px;margin-right:18px" tab="2">
+					<select id="time3" style="width: 145px;margin: 4px 0px 11px 0px">
 					  <option value="América (MG)">América (MG)</option>
 					  <option value="América (RN)">América (RN)</option>
 					  <option value="Athletico (PR)">Athletico (PR)</option>
@@ -189,7 +282,8 @@
 					  <option value="Vasco">Vasco</option>
 					  <option value="Vitória">Vitória</option>
 					</select>
-					<select id="ano2" style="width: 55px">
+					<select id="ano3" style="width: 60px">
+					  <option value="2022">2022</option>
 					  <option value="2021">2021</option>
 					  <option value="2020" selected>2020</option>
 					  <option value="2019">2019</option>
@@ -218,96 +312,9 @@
 						<tr>
 							<th style="width: 33px">Data</th>
 							<th style="width: 14px" title="Rodada">R</th>
-							<th style="width: 76px">Mandante</th>
+							<th style="width: 100px">Mandante</th>
 							<th>Placar</th>
-							<th style="width: 76px">Visitante</th>
-							<th style="width: 120px">Estádio</th>
-						</tr>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
-			</div>
-			<div>
-				<div style="width:432px;margin-right:18px" tab="2">
-					<select id="time3" style="width: 115px;margin: 4px 0px 11px 0px">
-					  <option value="América (MG)">América (MG)</option>
-					  <option value="América (RN)">América (RN)</option>
-					  <option value="Athletico (PR)">Athletico (PR)</option>
-					  <option value="Atlético (GO)">Atlético (GO)</option>
-					  <option value="Atlético (MG)">Atlético (MG)</option>
-					  <option value="Avaí">Avaí</option>
-					  <option value="Bahia">Bahia</option>
-					  <option value="Barueri">Barueri</option>
-					  <option value="Botafogo">Botafogo</option>
-					  <option value="Brasiliense">Brasiliense</option>
-					  <option value="Ceará">Ceará</option>
-					  <option value="Chapecoense">Chapecoense</option>
-					  <option value="Corinthians">Corinthians</option>
-					  <option value="Coritiba">Coritiba</option>
-					  <option value="Criciúma">Criciúma</option>
-					  <option value="Cruzeiro" selected>Cruzeiro</option>
-					  <option value="CSA">CSA</option>
-					  <option value="Cuiabá">Cuiabá</option>
-					  <option value="Figueirense">Figueirense</option>
-					  <option value="Flamengo">Flamengo</option>
-					  <option value="Fluminense">Fluminense</option>
-					  <option value="Fortaleza">Fortaleza</option>
-					  <option value="Goiás">Goiás</option>
-					  <option value="Grêmio">Grêmio</option>
-					  <option value="Guarani">Guarani</option>
-					  <option value="Internacional">Internacional</option>
-					  <option value="Ipatinga">Ipatinga</option>
-					  <option value="Joinville">Joinville</option>
-					  <option value="Juventude">Juventude</option>
-					  <option value="Náutico">Náutico</option>
-					  <option value="Palmeiras">Palmeiras</option>
-					  <option value="Paraná">Paraná</option>
-					  <option value="Paysandu">Paysandu</option>
-					  <option value="Ponte Preta">Ponte Preta</option>
-					  <option value="Portuguesa">Portuguesa</option>
-					  <option value="RB Bragantino">RB Bragantino</option>
-					  <option value="Santa Cruz">Santa Cruz</option>
-					  <option value="Santo André">Santo André</option>
-					  <option value="Santos">Santos</option>
-					  <option value="Sport">Sport</option>
-					  <option value="São Caetano">São Caetano</option>
-					  <option value="São Paulo">São Paulo</option>
-					  <option value="Vasco">Vasco</option>
-					  <option value="Vitória">Vitória</option>
-					</select>
-					<select id="ano3" style="width: 55px">
-					  <option value="2021">2021</option>
-					  <option value="2020">2020</option>
-					  <option value="2019" selected>2019</option>
-					  <option value="2018">2018</option>
-					  <option value="2017">2017</option>
-					  <option value="2016">2016</option>
-					  <option value="2015">2015</option>
-					  <option value="2014">2014</option>
-					  <option value="2013">2013</option>
-					  <option value="2012">2012</option>
-					  <option value="2011">2011</option>
-					  <option value="2010">2010</option>
-					  <option value="2009">2009</option>
-					  <option value="2008">2008</option>
-					  <option value="2007">2007</option>
-					  <option value="2006">2006</option>
-					  <option value="2005">2005</option>
-					  <option value="2004">2004</option>
-					  <option value="2003">2003</option>
-					</select>
-				<table>
-					<thead>
-						<tr>
-							<th title="Ano" colspan="6" style="background: #F2F2F2; font-size: 16px; height: 26px"></th>
-						</tr>
-						<tr>
-							<th style="width: 33px">Data</th>
-							<th style="width: 14px" title="Rodada">R</th>
-							<th style="width: 76px">Mandante</th>
-							<th>Placar</th>
-							<th style="width: 76px">Visitante</th>
+							<th style="width: 100px">Visitante</th>
 							<th style="width: 120px">Estádio</th>
 						</tr>
 					</thead>
