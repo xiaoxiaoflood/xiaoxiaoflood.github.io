@@ -1,7 +1,7 @@
-//console.log('m '+a[i].m+' '+a[i].gm+' '+a[i].gv+' '+a[i].v+' '+a[i].a);
+const ltimes = ['ABC', 'América (MG)', 'América (RN)', 'ASA', 'Athletico (PR)', 'Atlético (GO)', 'Atlético (MG)', 'Avaí', 'Bahia', 'Barueri', 'Boa', 'Botafogo', 'Botafogo (SP)', 'Brasil de Pelotas', 'Brasiliense', 'Brusque', 'Campinense', 'Ceará', 'Chapecoense', 'Confiança', 'Corinthians', 'Coritiba', 'CRB', 'Criciúma', 'Cruzeiro', 'CSA', 'Cuiabá', 'Duque de Caxias', 'Figueirense', 'Fortaleza', 'Gama', 'Goiás', 'Grêmio', 'Guarani', 'Guaratinguetá', 'Icasa', 'Internacional', 'Ipatinga', 'Ituano', 'Joinville', 'Juventude', 'Londrina', 'Luverdense', 'Macaé', 'Marília', 'Mogi Mirim', 'Náutico', 'Novorizontino', 'Oeste', 'Operário (PR)', 'Palmeiras', 'Paraná', 'Paulista', 'Paysandu', 'Ponte Preta', 'Portuguesa', 'RB Bragantino', 'Remo', 'Salgueiro', 'Sampaio Corrêa', 'Santa Cruz', 'Santo André', 'Sport', 'São Bento', 'São Caetano', 'São Raimundo', 'Tombense', 'Tupi', 'Vasco', 'Vila Nova','Vitória'];
 
-grp = {
-	'g12': ['Atlético (MG)', 'Botafogo', 'Corinthians', 'Cruzeiro', 'Internacional', 'Palmeiras', 'Vasco'],
+const grp = {
+	'g12': ['Atlético (MG)', 'Botafogo', 'Corinthians', 'Cruzeiro', 'Grêmio', 'Internacional', 'Palmeiras', 'Vasco'],
 	'elite': ['Corinthians', 'Cruzeiro', 'Internacional', 'Palmeiras', 'Vasco'],
 	'co': ['Atlético (GO)', 'Brasiliense', 'Cuiabá', 'Gama', 'Goiás', 'Luverdense', 'Vila Nova'],
 	'go': ['Atlético (GO)', 'Goiás', 'Vila Nova'],
@@ -22,101 +22,195 @@ grp = {
 	'n': ['Paysandu', 'Remo', 'São Raimundo'],
   'am': ['São Raimundo'],
 	'pa': ['Paysandu', 'Remo'],
-	'sd': ['América (MG)', 'Atlético (MG)', 'Boa', 'Botafogo (SP)', 'Barueri', 'Botafogo', 'Corinthians', 'Cruzeiro', 'Duque de Caxias', 'Guarani', 'Guaratinguetá', 'Ipatinga', 'Ituano', 'Macaé', 'Marília', 'Mogi Mirim', 'Oeste', 'Palmeiras', 'Paulista', 'Ponte Preta', 'Portuguesa', 'RB Bragantino', 'Santo André', 'São Bento', 'São Caetano', 'Tupi', 'Vasco'],
-	'mg': ['América (MG)', 'Atlético (MG)', 'Boa', 'Cruzeiro', 'Ipatinga', 'Tupi'],
+	'sd': ['América (MG)', 'Atlético (MG)', 'Boa', 'Botafogo (SP)', 'Barueri', 'Botafogo', 'Corinthians', 'Cruzeiro', 'Duque de Caxias', 'Guarani', 'Guaratinguetá', 'Ipatinga', 'Ituano', 'Macaé', 'Marília', 'Mogi Mirim', 'Novorizontino', 'Oeste', 'Palmeiras', 'Paulista', 'Ponte Preta', 'Portuguesa', 'RB Bragantino', 'Santo André', 'São Bento', 'São Caetano', 'Tombense', 'Tupi', 'Vasco'],
+	'mg': ['América (MG)', 'Atlético (MG)', 'Boa', 'Cruzeiro', 'Ipatinga', 'Tombense', 'Tupi'],
 	'mg2': ['Atlético (MG)', 'Cruzeiro'],
 	'rj': ['Botafogo', 'Duque de Caxias', 'Macaé', 'Vasco'],
 	'rj4': ['Botafogo', 'Vasco'],
-	'sp': ['Barueri', 'Botafogo (SP)', 'Corinthians', 'Guarani', 'Guaratinguetá', 'Ituano', 'Marília', 'Mogi Mirim', 'Oeste', 'Palmeiras', 'Paulista', 'Ponte Preta', 'Portuguesa', 'RB Bragantino', 'Santo André', 'São Bento', 'São Caetano'],
+	'sp': ['Barueri', 'Botafogo (SP)', 'Corinthians', 'Guarani', 'Guaratinguetá', 'Ituano', 'Marília', 'Mogi Mirim', 'Novorizontino', 'Oeste', 'Palmeiras', 'Paulista', 'Ponte Preta', 'Portuguesa', 'RB Bragantino', 'Santo André', 'São Bento', 'São Caetano'],
 	'sp4': ['Corinthians', 'Palmeiras'],
-	's': ['Athletico (PR)', 'Avaí', 'Brasil de Pelotas', 'Brusque', 'Chapecoense', 'Coritiba', 'Criciúma', 'Figueirense', 'Internacional', 'Joinville', 'Juventude', 'Londrina', 'Operário (PR)', 'Paraná'],
+	's': ['Athletico (PR)', 'Avaí', 'Brasil de Pelotas', 'Brusque', 'Chapecoense', 'Coritiba', 'Criciúma', 'Figueirense', 'Grêmio', 'Internacional', 'Joinville', 'Juventude', 'Londrina', 'Operário (PR)', 'Paraná'],
 	'pr': ['Athletico (PR)', 'Coritiba', 'Londrina', 'Operário (PR)', 'Paraná'],
 	'pr2': ['Athletico (PR)', 'Coritiba'],
-	'rs': ['Brasil de Pelotas', 'Internacional', 'Juventude'],
-	'rs2': ['Internacional'],
+	'rs': ['Brasil de Pelotas', 'Grêmio', 'Internacional', 'Juventude'],
+	'rs2': ['Grêmio', 'Internacional'],
 	'sc': ['Avaí', 'Brusque', 'Chapecoense', 'Criciúma', 'Figueirense', 'Joinville'],
 }
 
-cfinal = {
+const classFinais = {
 	2006: {
-		'c': 'Atlético (MG)',
-		'l': ['Sport', 'Náutico', 'América (RN)'],
-		'r': ['Paysandu', 'Guarani', 'São Raimundo', 'Vila Nova']
+		'campeao': 'Atlético (MG)',
+		'classificados': ['Sport', 'Náutico', 'América (RN)'],
+		'rebaixados': ['Paysandu', 'Guarani', 'São Raimundo', 'Vila Nova']
 	},
 	2007: {
-		'c': 'Coritiba',
-		'l': ['Ipatinga', 'Portuguesa', 'Vitória'],
-		'r': ['Paulista', 'Remo', 'Santa Cruz', 'Ituano']
+		'campeao': 'Coritiba',
+		'classificados': ['Ipatinga', 'Portuguesa', 'Vitória'],
+		'rebaixados': ['Paulista', 'Remo', 'Santa Cruz', 'Ituano']
 	},
 	2008: {
-		'c': 'Corinthians',
-		'l': ['Santo André', 'Avaí', 'Barueri'],
-		'r': ['Marília', 'Criciúma', 'Gama', 'CRB']
+		'campeao': 'Corinthians',
+		'classificados': ['Santo André', 'Avaí', 'Barueri'],
+		'rebaixados': ['Marília', 'Criciúma', 'Gama', 'CRB']
 	},
 	2009: {
-		'c': 'Vasco',
-		'l': ['Guarani', 'Ceará', 'Atlético (GO)'],
-		'r': ['Juventude', 'Fortaleza', 'Campinense', 'ABC']
+		'campeao': 'Vasco',
+		'classificados': ['Guarani', 'Ceará', 'Atlético (GO)'],
+		'rebaixados': ['Juventude', 'Fortaleza', 'Campinense', 'ABC']
 	},
 	2010: {
-		'c': 'Coritiba',
-		'l': ['Figueirense', 'Bahia', 'América (MG)'],
-		'r': ['Brasiliense', 'Santo André', 'Ipatinga', 'América (RN)']
+		'campeao': 'Coritiba',
+		'classificados': ['Figueirense', 'Bahia', 'América (MG)'],
+		'rebaixados': ['Brasiliense', 'Santo André', 'Ipatinga', 'América (RN)']
 	},
 	2011: {
-		'c': 'Portuguesa',
-		'l': ['Náutico', 'Ponte Preta', 'Sport'],
-		'r': ['Icasa', 'Vila Nova', 'Salgueiro', 'Duque de Caxias']
+		'campeao': 'Portuguesa',
+		'classificados': ['Náutico', 'Ponte Preta', 'Sport'],
+		'rebaixados': ['Icasa', 'Vila Nova', 'Salgueiro', 'Duque de Caxias']
 	},
 	2012: {
-		'c': 'Goiás',
-		'l': ['Criciúma', 'Athletico (PR)', 'Vitória'],
-		'r': ['CRB', 'Guarani', 'Ipatinga', 'Barueri']
+		'campeao': 'Goiás',
+		'classificados': ['Criciúma', 'Athletico (PR)', 'Vitória'],
+		'rebaixados': ['CRB', 'Guarani', 'Ipatinga', 'Barueri']
 	},
 	2013: {
-		'c': 'Palmeiras',
-		'l': ['Chapecoense', 'Sport', 'Figueirense'],
-		'r': ['Guaratinguetá', 'Paysandu', 'São Caetano', 'ASA']
+		'campeao': 'Palmeiras',
+		'classificados': ['Chapecoense', 'Sport', 'Figueirense'],
+		'rebaixados': ['Guaratinguetá', 'Paysandu', 'São Caetano', 'ASA']
 	},
 	2014: {
-		'c': 'Joinville',
-		'l': ['Ponte Preta', 'Vasco', 'Avaí'],
-		'r': ['América (RN)', 'Icasa', 'Vila Nova', 'Portuguesa']
+		'campeao': 'Joinville',
+		'classificados': ['Ponte Preta', 'Vasco', 'Avaí'],
+		'rebaixados': ['América (RN)', 'Icasa', 'Vila Nova', 'Portuguesa']
 	},
 	2015: {
-		'c': 'Botafogo',
-		'l': ['Santa Cruz', 'Vitória', 'América (MG)'],
-		'r': ['Macaé', 'ABC', 'Boa', 'Mogi Mirim']
+		'campeao': 'Botafogo',
+		'classificados': ['Santa Cruz', 'Vitória', 'América (MG)'],
+		'rebaixados': ['Macaé', 'ABC', 'Boa', 'Mogi Mirim']
 	},
 	2016: {
-		'c': 'Atlético (GO)',
-		'l': ['Avaí', 'Vasco', 'Bahia'],
-		'r': ['Joinville', 'Tupi', 'RB Bragantino', 'Sampaio Corrêa']
+		'campeao': 'Atlético (GO)',
+		'classificados': ['Avaí', 'Vasco', 'Bahia'],
+		'rebaixados': ['Joinville', 'Tupi', 'RB Bragantino', 'Sampaio Corrêa']
 	},
 	2017: {
-		'c': 'América (MG)',
-		'l': ['Internacional', 'Ceará', 'Paraná'],
-		'r': ['Luverdense', 'Santa Cruz', 'ABC', 'Náutico']
+		'campeao': 'América (MG)',
+		'classificados': ['Internacional', 'Ceará', 'Paraná'],
+		'rebaixados': ['Luverdense', 'Santa Cruz', 'ABC', 'Náutico']
 	},
 	2018: {
-		'c': 'Fortaleza',
-		'l': ['CSA', 'Avaí', 'Goiás'],
-		'r': ['Paysandu', 'Sampaio Corrêa', 'Juventude', 'Boa']
+		'campeao': 'Fortaleza',
+		'classificados': ['CSA', 'Avaí', 'Goiás'],
+		'rebaixados': ['Paysandu', 'Sampaio Corrêa', 'Juventude', 'Boa']
 	},
 	2019: {
-		'c': 'RB Bragantino',
-		'l': ['Sport', 'Coritiba', 'Atlético (GO)'],
-		'r': ['Londrina', 'São Bento', 'Criciúma', 'Vila Nova']
+		'campeao': 'RB Bragantino',
+		'classificados': ['Sport', 'Coritiba', 'Atlético (GO)'],
+		'rebaixados': ['Londrina', 'São Bento', 'Criciúma', 'Vila Nova']
 	},
 	2020: {
-		'c': 'Chapecoense',
-		'l': ['América (MG)', 'Juventude', 'Cuiabá'],
-		'r': ['Figueirense', 'Paraná', 'Botafogo (SP)', 'Oeste']
+		'campeao': 'Chapecoense',
+		'classificados': ['América (MG)', 'Juventude', 'Cuiabá'],
+		'rebaixados': ['Figueirense', 'Paraná', 'Botafogo (SP)', 'Oeste']
 	},
   2021: {
-    'c': 'Botafogo',
-    'l': ['Goiás', 'Coritiba', 'Avaí'],
-    'r': ['Remo', 'Vitória', 'Confiança', 'Brasil de Pelotas']
+    'campeao': 'Botafogo',
+    'classificados': ['Goiás', 'Coritiba', 'Avaí'],
+    'rebaixados': ['Remo', 'Vitória', 'Confiança', 'Brasil de Pelotas']
+  },
+  2022: {
+    'campeao': 'Cruzeiro',
+    'classificados': ['Grêmio', 'Bahia', 'Vasco'],
+    'rebaixados': ['CSA', 'Brusque', 'Operário (PR)', 'Náutico']
+  },
+}
+
+const seta = {
+  '-1': '↓',
+  '1': '↑'
+};
+
+function somaJogo (linhas, time, gm, gs, tapetao = 0, wo, seen) {
+  initTimeMatriz(time, seen);
+
+  let i = linhas.map(e => e.n).indexOf(time);
+
+  if (wo) {
+    gm = 0,
+    gs = 3;
+  }
+
+  let pontos = gm > gs ? 3 : gm == gs ? 1 : 0;
+
+  linhas[i].p += pontos + tapetao;
+  linhas[i].j ++;
+  linhas[i].v += pontos === 3 ? 1 : 0;
+  linhas[i].e += pontos === 1 ? 1 : 0;
+  linhas[i].d += pontos === 0 ? 1 : 0;
+  linhas[i].gm += gm;
+  linhas[i].gs += gs;
+  linhas[i].s += gm - gs;
+}
+
+function exibeClassificacao (arr) {
+  // quando houver mais de um time empatado em tudo, repetir menor posição
+  let anterior;
+  let posicaoRetida = 0;
+  let tbl = '';
+  let posicao = 1;
+
+  for (const time of arr) {
+    const atual = time.p + ' ' + time.j + ' ' + time.v + ' ' + time.s + ' ' + time.gm;
+    const aprov = (time.p / (time.j * 3) * 100).toLocaleString('pt-BR', {
+      minimumFractionDigits: 1,
+      maximumFractionDigits: 1
+    });
+
+    if (atual === anterior) {
+      posicaoRetida++;
+      posicao--;
+    } else {
+      posicao += posicaoRetida;
+      posicaoRetida = 0;
+    }
+
+    anterior = atual;
+
+    tbl += `
+      <tr>
+        <td>${posicao}</td>
+        <td>${time.n}</td>
+        <td>${time.p}</td>
+        <td>${time.j}</td>
+        <td>${time.v}</td>
+        <td>${time.e}</td>
+        <td>${time.d}</td>
+        <td>${time.gm}</td>
+        <td>${time.gs}</td>
+        <td>${time.s}</td>
+        <td>${aprov}</td>
+      </tr>`;
+
+    posicao++;
+  }
+
+  tBody.innerHTML = tbl;
+
+  if (tbl)
+    tabela.style.visibility = 'visible';
+  else
+    tabela.style.visibility = 'hidden';
+
+  if (anoInicio.value == anoFinal.value) {
+    const ano = anoInicio.value;
+    for (const linha of tBody.rows) {
+      if (classFinais[ano].campeao == linha.cells[1].textContent)
+        linha.cells[1].style.backgroundColor = 'dodgerblue';
+      else if (classFinais[ano].classificados.includes(linha.cells[1].textContent))
+        linha.cells[1].style.backgroundColor = 'lightgreen';
+      else if (classFinais[ano].rebaixados.includes(linha.cells[1].textContent))
+        linha.cells[1].style.backgroundColor = 'indianred';
+    }
   }
 }
 
@@ -137,8 +231,6 @@ classifica = function(tabela, time, gm, gs, t, wo) {
 	tabela[ind].s += (gm - gs);
 }
 
-!function(n,t){"function"==typeof define&&define.amd?define([],t):"object"==typeof exports?module.exports=t():n.firstBy=t()}(this,function(){var n=function(){function n(n){return n}function t(n){return"string"==typeof n?n.toLowerCase():n}function e(e,r){if(r="number"==typeof r?{direction:r}:r||{},"function"!=typeof e){var i=e;e=function(n){return n[i]?n[i]:""}}if(1===e.length){var o=e,f=r.ignoreCase?t:n;e=function(n,t){return f(o(n))<f(o(t))?-1:f(o(n))>f(o(t))?1:0}}return r.direction===-1?function(n,t){return-e(n,t)}:e}function r(n,t){var i="function"==typeof this&&this,o=e(n,t),f=i?function(n,t){return i(n,t)||o(n,t)}:o;return f.thenBy=r,f}return r}();return n});
- 
 classificacao = function(a) {
 	var ult = undefined;
 	var ajus = 0;
@@ -160,106 +252,162 @@ classificacao = function(a) {
 	else
 		document.getElementById('clas').style.visibility = 'hidden';
 	document.getElementById('clas').getElementsByTagName('tbody')[0].innerHTML = tbl;
-	
+
 					if (document.getElementById('s1').value == document.getElementById('s2').value) {
 						a = document.getElementById('s1').value;
 						for (var n = 0; n < clas.tBodies[0].rows.length; n++) {
-							if (cfinal[a].c == clas.tBodies[0].rows[n].cells[1].textContent) {
+							if (classFinais[a].c == clas.tBodies[0].rows[n].cells[1].textContent) {
 								clas.tBodies[0].rows[n].cells[1].style.backgroundColor = 'dodgerblue';
-							} else if (cfinal[a].l.includes(clas.tBodies[0].rows[n].cells[1].textContent)) {
+							} else if (classFinais[a].l.includes(clas.tBodies[0].rows[n].cells[1].textContent)) {
 								clas.tBodies[0].rows[n].cells[1].style.backgroundColor = 'lightgreen';
-							} else if (cfinal[a].r.includes(clas.tBodies[0].rows[n].cells[1].textContent)) {
+							} else if (classFinais[a].r.includes(clas.tBodies[0].rows[n].cells[1].textContent)) {
 								clas.tBodies[0].rows[n].cells[1].style.backgroundColor = 'indianred';
 							}
 						}
 					}
 }
- 
-function cls (a, Args = {}) {
-  var mando = 'mando' in Args ? Args.mando : 1;
-  var anos = [], res = [1,], rodadas = [1,];
-  var turno = 'turno' in Args ? Args.turno : undefined;
-	if ('rodadas' in Args)
-		rodadas[0] = Number(Args.rodadas.split(':')[0]),
-		rodadas[1] = Number(Args.rodadas.split(':')[1]);
-    var rfixas = 'rfixas' in Args ? Args.rfixas : undefined;
-	var times = 'times' in Args && Args.times.length ? new Set(Args.times) : new Set(ltimes);
-	var adv = 'adv' in Args && Args.adv.length ? new Set(Args.adv) : new Set();
-	if ('anos' in Args){
-		if (typeof Args.anos === 'object')
-			anos = Args.anos;
-		else if (typeof Args.anos === 'string') {
-			for (var i = Number(Args.anos.split(':')[0]); i <= Number(Args.anos.split(':')[1]); i++) {
-				anos.push(i);
-			}
-		}
-	}
 
-  seen = new Set(); var aux;
-  i = a.length;
-  x = new Array();
+function calcClass({
+  anos = [],
+  adv,
+  jogos = j,
+  mando = frm.mando.value,
+  rfixas,
+  rodadas = [1,],
+  times = ltimes,
+  turno = frm.turno.value,
+} = {}) {
+  if (typeof anos === 'string') {
+    let anosarr = [];
+    let anosSplit = anos.split(':').map(a => Number(a));
+    for (let i = anosSplit[0]; i <= anosSplit[1]; i++)
+      anosarr.push(i);
+    anos = anosarr;
+  }
 
-  while (i--) {
-    if (anos.length == 0 || anos.indexOf(a[i].y) > -1){
-      if (turno == 1){
-        res[1] = 19;
-      } else if (turno == 2){
-        res[0] = 20, res[1] = 38;
-      } else {
-        if (!rodadas[1] || (a[i].y != anos[anos.length - 1] && !rfixas)) {
-          res[1] = 38;
-        } else
-          res[1] = rodadas[1];
-        if (a[i].y == anos[0] || rfixas) {
-          res[0] = rodadas[0];
-        } else
-          res[0] = 1;
+  let seen = new Set();
+  let rod = [1,];
+  adv = new Set(adv);
+  times = times.length ? new Set(times) : new Set(ltimes);
+  matriz = [];
+  let i = 0;
+  while (i < jogos.length) {
+    if (!anos.length || anos.includes(jogos[i].y)){
+      switch (turno) {
+        case '1':
+          rodadas[1] = 19;
+          break;
+        case '2':
+          rodadas[0] = 20;
+          rodadas[1] = 38;
+          break;
+        default:
+          if (!rodadas[1] || (jogos[i].y !== anos[anos.length - 1] && !rfixas))
+            rodadas[1] = 38;
+          if (jogos[i].y > anos[0] && !rfixas)
+            rodadas[0] = 1;
       }
-      emjogotm = times.has(a[i].m);
-      emjogotv = times.has(a[i].v);
-      emjogoam = adv.has(a[i].m);
-      emjogoav = adv.has(a[i].v);
-      if (mando < 2) {
-        if (a[i].r >= res[0] && a[i].r <= res[1]){
-          if (!adv.size && times.size == 1 && emjogotm) {
-            if (!seen.has(a[i].v)) {
-              x.push({n:a[i].v,p:0,j:0,v:0,e:0,d:0,gm:0,gs:0,s:0});
-              seen.add(a[i].v);
-            }
-            classifica(x, a[i].v, a[i].gm, a[i].gv, a[i].tm, a[i].wo);
-          } else if (emjogotm && ((!adv.size && emjogotv) || emjogoav)) {
-            if (!seen.has(a[i].m)) {
-              x.push({n:a[i].m,p:0,j:0,v:0,e:0,d:0,gm:0,gs:0,s:0});
-              seen.add(a[i].m);
-            }
-            classifica(x, a[i].m, a[i].gm, a[i].gv, a[i].tm, a[i].wo);
-          }
+
+      let emjogotm = times.has(jogos[i].m);
+      let emjogotv = times.has(jogos[i].v);
+      let emjogoam = adv.has(jogos[i].m);
+      let emjogoav = adv.has(jogos[i].v);
+
+      // sem visitante
+      if (mando !== '2') {
+        if (jogos[i].r >= rodadas[0] && jogos[i].r <= rodadas[1]) {
+          if (!adv.size && times.size == 1 && emjogotm)
+            somaJogo(matriz, jogos[i].v, jogos[i].gm, jogos[i].gv, jogos[i].tm, jogos[i].wo, seen);
+          else if (emjogotm && ((!adv.size && emjogotv) || emjogoav))
+            somaJogo(matriz, jogos[i].m, jogos[i].gm, jogos[i].gv, jogos[i].tm, jogos[i].wo, seen);
         }
       }
-      if (mando > 0) {
-        if (a[i].r >= res[0] && a[i].r <= res[1]){
-          if (!adv.size && times.size == 1 && emjogotv) {
-            if (!seen.has(a[i].m)) {
-              x.push({n:a[i].m,p:0,j:0,v:0,e:0,d:0,gm:0,gs:0,s:0});
-              seen.add(a[i].m);
-            }
-            classifica(x, a[i].m, a[i].gv, a[i].gm, a[i].tv, a[i].wo);
-          } else if (emjogotv && ((!adv.size && emjogotm) || emjogoam)) {
-            if (!seen.has(a[i].v)) {
-              x.push({n:a[i].v,p:0,j:0,v:0,e:0,d:0,gm:0,gs:0,s:0});
-              seen.add(a[i].v);
-            }
-            classifica(x, a[i].v, a[i].gv, a[i].gm, a[i].tv, a[i].wo);
-          }
+
+      // sem mandante
+      if (mando !== '1') {
+        if (jogos[i].r >= rodadas[0] && jogos[i].r <= rodadas[1]) {
+          if (!adv.size && times.size == 1 && emjogotv)
+            somaJogo(matriz, jogos[i].m, jogos[i].gv, jogos[i].gm, jogos[i].tv, jogos[i].wo, seen);
+          else if (emjogotv && ((!adv.size && emjogotm) || emjogoam))
+            somaJogo(matriz, jogos[i].v, jogos[i].gv, jogos[i].gm, jogos[i].tv, jogos[i].wo, seen);
         }
       }
     }
+    i++;
   }
-
-  if (times.size == ltimes.length && !adv.size)
-    classificacao(x.sort(firstBy('p',-1).thenBy('v',-1).thenBy('s',-1).thenBy('gm',-1).thenBy(function(a){return a.n.toUpperCase()})));
-  else
-    classificacao(x.sort(firstBy(function(a){return -a.p / (a.j * 3)}).thenBy('p',-1).thenBy('v',-1).thenBy('s',-1).thenBy('gm',-1).thenBy(function(a){return a.n.toUpperCase()})));
 }
 
-cls(j);
+
+function classificar ({
+  anos = [],
+  adv,
+  jogos = j,
+  mando = frm.mando.value,
+  rfixas,
+  rodadas = [1,],
+  times = ltimes,
+  turno = frm.turno.value,
+} = {}) {
+  calcClass(...arguments);
+
+  if (times.size == ltimes.length && !adv.size)
+    exibeClassificacao(matriz.sort(firstBy('p', -1).thenBy('v', -1)
+                                                   .thenBy('s', -1)
+                                                   .thenBy('gm', -1)
+                                                   .thenBy(a => a.n.toUpperCase())));
+  else
+    exibeClassificacao(matriz.sort(firstBy(a => -a.p / (a.j * 3)).thenBy('p', -1)
+                                                                 .thenBy('v', -1)
+                                                                 .thenBy('s', -1)
+                                                                 .thenBy('gm', -1)
+                                                                 .thenBy(a => a.n.toUpperCase())));
+}
+
+function initTimeMatriz (nome, seen) {
+  if (!seen.has(nome)) {
+    matriz.push({
+      n: nome,
+      p: 0,
+      j: 0,
+      v: 0,
+      e: 0,
+      d: 0,
+      gm: 0,
+      gs: 0,
+      s: 0
+    });
+    seen.add(nome);
+  }
+}
+
+function preencheElementos () {
+  Object.keys(classFinais).reverse().forEach(ano => {
+    let opt = document.createElement('option');
+    opt.value = ano;
+    opt.text = ano;
+    anoInicio.add(opt);
+    let opt2 = opt.cloneNode(true);
+    anoFinal.add(opt2);
+  });
+  anoInicio.selectedIndex = anoInicio.length - 1;
+
+  ltimes.forEach(aTime => {
+    let opt = document.createElement('option');
+    opt.value = aTime;
+    opt.text = aTime;
+    time.add(opt);
+    let opt2 = opt.cloneNode(true);
+    timea.add(opt2);
+  });
+}
+
+function init () {
+  preencheElementos();
+  classificar();
+}
+
+// thenBy.js
+/*** Copyright 2020 Teun Duynstee Licensed under the Apache License, Version 2.0 ***/
+!function(n,t){"function"==typeof define&&define.amd?define([],t):"object"==typeof exports?module.exports=t():n.firstBy=t()}(this,function(){function s(n){return n}function y(n){return"string"==typeof n?n.toLowerCase():n}function p(n,t){var e,i,o,r,f,u="function"==typeof this&&!this.firstBy&&this,c=(t="object"==typeof(t=t)?t:{direction:t},"function"!=typeof(e=n)&&(i=e,e=function(n){return n[i]||""}),1===e.length&&(o=e,r=t.ignoreCase?y:s,f=t.cmp||function(n,t){return n<t?-1:t<n?1:0},e=function(n,t){return f(r(o(n)),r(o(t)))}),t.direction in{"-1":"",desc:""}?function(n,t){return-e(n,t)}:e),t=u?function(n,t){return u(n,t)||c(n,t)}:c;return t.thenBy=p,t}return p.firstBy=p});
+
+addEventListener('DOMContentLoaded', init);
