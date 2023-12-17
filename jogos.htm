@@ -108,7 +108,8 @@
 					  <option value="Vitória">Vitória</option>
 					</select>
 					<select id="ano" style="width: 60px">
-					  <option value="2022" selected>2022</option>
+					  <option value="2023" selected>2023</option>
+					  <option value="2022">2022</option>
 					  <option value="2021">2021</option>
 					  <option value="2020">2020</option>
 					  <option value="2019">2019</option>
@@ -195,8 +196,9 @@
 					  <option value="Vitória">Vitória</option>
 					</select>
 					<select id="ano2" style="width: 60px">
-					  <option value="2022">2022</option>
-					  <option value="2021" selected>2021</option>
+					  <option value="2023">2023</option>
+					  <option value="2022" selected>2022</option>
+					  <option value="2021">2021</option>
 					  <option value="2020">2020</option>
 					  <option value="2019">2019</option>
 					  <option value="2018">2018</option>
@@ -283,9 +285,10 @@
 					  <option value="Vitória">Vitória</option>
 					</select>
 					<select id="ano3" style="width: 60px">
+					  <option value="2023">2023</option>
 					  <option value="2022">2022</option>
-					  <option value="2021">2021</option>
-					  <option value="2020" selected>2020</option>
+					  <option value="2021" selected>2021</option>
+					  <option value="2020">2020</option>
 					  <option value="2019">2019</option>
 					  <option value="2018">2018</option>
 					  <option value="2017">2017</option>
@@ -340,7 +343,7 @@
 				document.getElementsByTagName('tbody')[tab].innerHTML = tjogos;
 			}
 			
-			jgs('Cruzeiro', 2020, 0);
+			jgs('Cruzeiro', 2023, 0);
 			jgs('Cruzeiro', 2019, 1);
 			jgs('Cruzeiro', 2018, 2);
 			
@@ -367,6 +370,7 @@
 				document.getElementById('time3').addEventListener('wheel', oncg);
 				document.getElementById('ano3').addEventListener('change', oncg);
 				document.getElementById('ano3').addEventListener('wheel', oncg);
+				document.getElementById('time').focus();
 			}
 		</script>
 	</body>

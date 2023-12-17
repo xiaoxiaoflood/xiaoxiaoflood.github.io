@@ -130,6 +130,11 @@ const classFinais = {
     'classificados': ['Internacional', 'Fluminense', 'Corinthians', 'Flamengo', 'Athletico (PR)', 'Atlético (MG)', 'Fortaleza'],
     'rebaixados': ['Ceará', 'Atlético (GO)', 'Avaí', 'Juventude']
   },
+  2023: {
+    'campeao': 'Palmeiras',
+    'classificados': ['Grêmio', 'Atlético (MG)', 'Flamengo', 'Botafogo', 'RB Bragantino'],
+    'rebaixados': ['Santos', 'Goiás', 'Coritiba', 'América (MG)']
+  },
 }
 
 const seta = {
@@ -240,13 +245,14 @@ function classificar ({
   }
 
   let seen = new Set();
-  let rod = [1,];
+  let _rodadas = [...rodadas];
   adv = new Set(adv);
   times = times.length ? new Set(times) : new Set(ltimes);
   matriz = [];
   let i = 0;
+
   while (i < jogos.length) {
-    if (!anos.length || anos.includes(jogos[i].y)){
+    if (!anos.length || anos.includes(jogos[i].y)) {
       switch (turno) {
         case '1':
           switch (jogos[i].y) {
@@ -290,9 +296,13 @@ function classificar ({
               default:
                 rodadas[1] = 38;
             }
+          } else {
+            rodadas[1] = _rodadas[1];
           }
           if (jogos[i].y > anos[0] && !rfixas)
             rodadas[0] = 1;
+          else
+            rodadas[0] = _rodadas[0];
       }
 
       let emjogotm = times.has(jogos[i].m);
@@ -324,16 +334,9 @@ function classificar ({
   }
 
   if (times.size == ltimes.length && !adv.size)
-    exibeClassificacao(matriz.sort(firstBy('p', -1).thenBy('v', -1)
-                                                   .thenBy('s', -1)
-                                                   .thenBy('gm', -1)
-                                                   .thenBy(a => a.n.toUpperCase())));
+    ordena(matriz, ordem);
   else
-    exibeClassificacao(matriz.sort(firstBy(a => -a.p / (a.j * 3)).thenBy('p', -1)
-                                                                 .thenBy('v', -1)
-                                                                 .thenBy('s', -1)
-                                                                 .thenBy('gm', -1)
-                                                                 .thenBy(a => a.n.toUpperCase())));
+    ordena(matriz, 'adversarios');
 }
 
 function initTimeMatriz (nome, seen) {
@@ -372,6 +375,128 @@ function preencheElementos () {
     let opt2 = opt.cloneNode(true);
     timea.add(opt2);
   });
+}
+
+function ordena (mat, t, inv) {
+  mat = xiao || mat;
+
+  if (inv)
+    dir = dir * -1;
+
+  switch (t) {
+    case 'adversarios':
+      exibeClassificacao(
+        mat.sort(
+          firstBy(a => -a.p / (a.j * 3)).thenBy('p', dir)
+                                        .thenBy('v', dir)
+                                        .thenBy('s', dir)
+                                        .thenBy('gm', dir)
+                                        .thenBy(a => a.n.toUpperCase())
+        )
+      );
+      break;
+    case 'aproveitamento':
+       exibeClassificacao(
+         mat.sort(
+           firstBy(a => (a.p / (a.j * 3)), dir).thenBy('p', dir)
+                                               .thenBy('v', dir)
+                                               .thenBy('s', dir)
+                                               .thenBy('gm', dir)
+                                               .thenBy(a => a.n.toUpperCase())
+        )
+      );
+      break;
+    case 'derrotas':
+      exibeClassificacao(
+        mat.sort(
+          firstBy('d', dir).thenBy('p', dir)
+                           .thenBy('v', dir)
+                           .thenBy('s', dir)
+                           .thenBy('gm', dir)
+                           .thenBy(a => a.n.toUpperCase())
+        )
+      );
+      break;
+    case 'empates':
+      exibeClassificacao(
+        mat.sort(
+          firstBy('e', dir).thenBy('p', dir)
+                            .thenBy('v', dir)
+                            .thenBy('s', dir)
+                            .thenBy('gm', dir)
+                            .thenBy(a => a.n.toUpperCase())
+        )
+      );
+      break;
+    case 'golscontra':
+      exibeClassificacao(
+        mat.sort(
+          firstBy('gs', dir).thenBy('p', dir)
+                            .thenBy('v', dir)
+                            .thenBy('s', dir)
+                            .thenBy('gm', dir)
+                            .thenBy(a => a.n.toUpperCase())
+        )
+      );
+      break;
+    case 'golspro':
+      exibeClassificacao(
+        mat.sort(
+          firstBy('gm', dir).thenBy('p', dir)
+                            .thenBy('v', dir)
+                            .thenBy('s', dir)
+                            .thenBy(a => a.n.toUpperCase())
+        )
+      );
+      break;
+    case 'jogos':
+      exibeClassificacao(
+        mat.sort(
+          firstBy('j', dir).thenBy('p', dir)
+                               .thenBy('v', dir)
+                               .thenBy('s', dir)
+                               .thenBy('gm', dir)
+                               .thenBy(a => a.n.toUpperCase())
+        )
+      );
+      break;
+    case 'saldo':
+      exibeClassificacao(
+        mat.sort(
+          firstBy('s', dir).thenBy('p', dir)
+                           .thenBy('v', dir)
+                           .thenBy('gm', dir)
+                           .thenBy(a => a.n.toUpperCase())
+        )
+      );
+      break;
+    case 'times':
+      exibeClassificacao(
+        mat.sort(firstBy(a => a.n.toUpperCase(), dir))
+      );
+      break;
+    case 'vitorias':
+      exibeClassificacao(
+        mat.sort(
+          firstBy('v', dir).thenBy('p', dir)
+                           .thenBy('s', dir)
+                           .thenBy('gm', dir)
+                           .thenBy(a => a.n.toUpperCase())
+        )
+      );
+      break
+    default:
+      exibeClassificacao(
+        mat.sort(
+          firstBy('p', dir).thenBy('v', dir)
+                          .thenBy('s', dir)
+                          .thenBy('gm', dir)
+                          .thenBy(a => a.n.toUpperCase())
+        )
+      );
+  }
+
+  prevordem = t;
 }
 
 function init () {

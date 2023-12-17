@@ -7,7 +7,9 @@
     <script type="text/javascript">
       // fun.js já foi revisto, falta este aquivo aqui. À medida em que for acertando, o correto é levar o código para lá.
       let matriz;
-      let posc = -1;
+      let ordem = 'padrao';
+      let prevordem;
+      let dir = -1;
       let flag;
       let flag1;
       let flag2;
@@ -22,6 +24,7 @@
       let max2 = 46;
       let rodadas = [];
       let rfixas;
+      let xiao = undefined;
 
       function getVals (e) {
         if (e.target.id == 'mands' && frm.mando.value) {
@@ -88,20 +91,22 @@
         var exmax = max;
         var exmax2 = max2;
 
-        if (slide2 < 2005) {
-          max = 46;
-        } else if (slide2 == 2005) {
-          max = 42;
-        }  else {
-          max = 38
-        }
-
         if (slide1 < 2005) {
           max2 = 46;
         } else if(slide1 == 2005) {
           max2 = 42;
         }  else {
           max2 = 38
+        }
+
+        if (rfixas) {
+          max = max2;
+        } else if (slide2 < 2005) {
+          max = 46;
+        } else if (slide2 == 2005) {
+          max = 42;
+        }  else {
+          max = 38
         }
 
         if (rfixas && parseInt(document.getElementById('r1').value) >  parseInt(document.getElementById('r2').value))
@@ -501,7 +506,7 @@
         document.getElementById('subtrair').addEventListener('click', subtr);
         document.getElementById('igual').addEventListener('click', function () {
           if (typeof xiao != 'undefined')
-            exibeClassificacao(xiao.sort(firstBy('p',-1).thenBy('v',-1).thenBy('s',-1).thenBy('gm',-1).thenBy(function(a){return a.n.toUpperCase()})));
+            ordena(xiao, ordem, true);
         });
         document.getElementById('clear').addEventListener('click', function () {
           xiao = undefined;
@@ -512,6 +517,7 @@
           }
         });
 
+        document.getElementById('anoInicio').focus();
        //coloca tabela na memoria, soma com outras e tal, lista de jogos. filtrar tabela por condicao, tipo minimo de jogos. agrupa times na classificacao, tipo pra fazer mg × paulistas
       }
 
@@ -523,8 +529,8 @@
           }
         }
 
-        if (el.innerHTML != '#' || posc != -1)
-          el.innerHTML += seta[posc];
+        if (el.innerHTML != '#' || dir != -1)
+          el.innerHTML += seta[dir];
       }
     </script>
     <style type="text/css">
@@ -664,17 +670,17 @@
         <table id="tabela">
           <thead>
             <tr>
-              <th title="Posição" onclick="if(typeof xiao !== 'undefined') matriz = xiao;exibeClassificacao(matriz.sort(firstBy('p',posc*=-1).thenBy('v',posc).thenBy('s',posc).thenBy('gm',posc).thenBy(function(a){return a.n.toUpperCase()})));tsort(this);">#</th>
-              <th id="htimes" onclick="if(typeof xiao !== 'undefined') matriz = xiao;exibeClassificacao(matriz.sort(firstBy(function(a){return a.n.toUpperCase()}, posc*=-1)));tsort(this);">Time</th>
-              <th title="Pontos" onclick="if(typeof xiao !== 'undefined') matriz = xiao;exibeClassificacao(matriz.sort(firstBy('p',posc*=-1).thenBy('v',posc).thenBy('s',posc).thenBy('gm',posc).thenBy(function(a){return a.n.toUpperCase()})));tsort(this);">Pts</th>
-              <th title="Jogos" onclick="if(typeof xiao !== 'undefined') matriz = xiao;exibeClassificacao(matriz.sort(firstBy('j',posc*=-1).thenBy('p',-1).thenBy('v',-1).thenBy('s',-1).thenBy('gm',-1).thenBy(function(a){return a.n.toUpperCase()})));tsort(this);">J</th>
-              <th title="Vitórias" onclick="if(typeof xiao !== 'undefined') matriz = xiao;exibeClassificacao(matriz.sort(firstBy('v',posc*=-1).thenBy('p',posc).thenBy('s',posc).thenBy('gm',posc).thenBy(function(a){return a.n.toUpperCase()})));tsort(this);">V</th>
-              <th title="Empates" onclick="if(typeof xiao !== 'undefined') matriz = xiao;exibeClassificacao(matriz.sort(firstBy('e',posc*=-1).thenBy('p',-1).thenBy('v',-1).thenBy('s',-1).thenBy('gm',-1).thenBy(function(a){return a.n.toUpperCase()})));tsort(this);">E</th>
-              <th title="Derrotas" onclick="if(typeof xiao !== 'undefined') matriz = xiao;exibeClassificacao(matriz.sort(firstBy('d',posc*=-1).thenBy('p',posc).thenBy('v',posc).thenBy('s',posc).thenBy('gm',posc).thenBy(function(a){return a.n.toUpperCase()})));tsort(this);">D</th>
-              <th title="Gols Pró" onclick="if(typeof xiao !== 'undefined') matriz = xiao;exibeClassificacao(matriz.sort(firstBy('gm',posc*=-1).thenBy('p',posc).thenBy('v',posc).thenBy('s',posc).thenBy(function(a){return a.n.toUpperCase()})));tsort(this);">GP</th>
-              <th title="Gols Contra" onclick="if(typeof xiao !== 'undefined') matriz = xiao;exibeClassificacao(matriz.sort(firstBy('gs',posc*=-1).thenBy('p',posc).thenBy('v',posc).thenBy('s',posc).thenBy('gm',posc).thenBy(function(a){return a.n.toUpperCase()})));tsort(this);">GC</th>
-              <th title="Saldo de Gols" onclick="if(typeof xiao !== 'undefined') matriz = xiao;exibeClassificacao(matriz.sort(firstBy('s',posc*=-1).thenBy('p',posc).thenBy('v',posc).thenBy('gm',posc).thenBy(function(a){return a.n.toUpperCase()})));tsort(this);">SG</th>
-              <th title="Aproveitamento de pontos" onclick="if(typeof xiao !== 'undefined') matriz = xiao;exibeClassificacao(matriz.sort(firstBy(function(a){return (a.p / (a.j * 3))},posc*=-1).thenBy('p',posc).thenBy('v',posc).thenBy('s',posc).thenBy('gm',posc).thenBy(function(a){return a.n.toUpperCase()})));tsort(this);">%</th>
+              <th title="Posição" onclick="ordem = 'padrao'; ordena(matriz, ordem, prevordem === ordem); tsort(this);">#</th>
+              <th id="htimes" onclick="ordem = 'times'; ordena(matriz, ordem, prevordem === ordem); tsort(this);">Time</th>
+              <th title="Pontos" onclick="ordem = 'padrao'; ordena(matriz, ordem, prevordem === ordem); tsort(this);">Pts</th>
+              <th title="Jogos" onclick="ordem = 'jogos'; ordena(matriz, ordem, prevordem === ordem); tsort(this);">J</th>
+              <th title="Vitórias" onclick="ordem = 'vitorias'; ordena(matriz, ordem, prevordem === ordem); tsort(this);">V</th>
+              <th title="Empates" onclick="ordem = 'empates'; ordena(matriz, ordem, prevordem === ordem); tsort(this);">E</th>
+              <th title="Derrotas" onclick="ordem = 'derrotas'; ordena(matriz, ordem, prevordem === ordem); tsort(this);">D</th>
+              <th title="Gols Pró" onclick="ordem = 'golspro'; ordena(matriz, ordem, prevordem === ordem); tsort(this);">GP</th>
+              <th title="Gols Contra" onclick="ordem = 'golscontra'; ordena(matriz, ordem, prevordem === ordem); tsort(this);">GC</th>
+              <th title="Saldo de Gols" onclick="ordem = 'saldo'; ordena(matriz, ordem, prevordem === ordem); tsort(this);">SG</th>
+              <th title="Aproveitamento de pontos" onclick="ordem = 'aproveitamento'; ordena(matriz, ordem, prevordem === ordem); tsort(this);">%</th>
             </tr>
           </thead>
           <tbody id='tBody'/>
