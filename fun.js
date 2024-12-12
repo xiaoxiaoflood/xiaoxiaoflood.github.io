@@ -135,6 +135,11 @@ const classFinais = {
     'classificados': ['Grêmio', 'Atlético (MG)', 'Flamengo', 'Botafogo', 'RB Bragantino'],
     'rebaixados': ['Santos', 'Goiás', 'Coritiba', 'América (MG)']
   },
+  2024: {
+    'campeao': 'Botafogo',
+    'classificados': ['Palmeiras', 'Flamengo', 'Fortaleza', 'Internacional', 'São Paulo', 'Corinthians', 'Bahia'],
+    'rebaixados': ['Athletico (PR)', 'Criciúma', 'Atlético (GO)', 'Cuiabá']
+  },
 }
 
 const seta = {
@@ -378,8 +383,6 @@ function preencheElementos () {
 }
 
 function ordena (mat, t, inv) {
-  mat = xiao || mat;
-
   if (inv)
     dir = dir * -1;
 

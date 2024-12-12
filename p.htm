@@ -506,7 +506,7 @@
         document.getElementById('subtrair').addEventListener('click', subtr);
         document.getElementById('igual').addEventListener('click', function () {
           if (typeof xiao != 'undefined')
-            ordena(xiao, ordem, true);
+            ordena(matriz = xiao, ordem);
         });
         document.getElementById('clear').addEventListener('click', function () {
           xiao = undefined;
