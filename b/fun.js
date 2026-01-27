@@ -1,13 +1,13 @@
-const ltimes = ['ABC', 'Amazonas', 'América (MG)', 'América (RN)', 'ASA', 'Athletico (PR)', 'Atlético (GO)', 'Atlético (MG)', 'Avaí', 'Bahia', 'Barueri', 'Boa', 'Botafogo', 'Botafogo (SP)', 'Brasil de Pelotas', 'Brasiliense', 'Brusque', 'Campinense', 'Ceará', 'Chapecoense', 'Confiança', 'Corinthians', 'Coritiba', 'CRB', 'Criciúma', 'Cruzeiro', 'CSA', 'Cuiabá', 'Duque de Caxias', 'Figueirense', 'Fortaleza', 'Gama', 'Goiás', 'Grêmio', 'Guarani', 'Guaratinguetá', 'Icasa', 'Internacional', 'Ipatinga', 'Ituano', 'Joinville', 'Juventude', 'Londrina', 'Luverdense', 'Macaé', 'Marília', 'Mirassol', 'Mogi Mirim', 'Náutico', 'Novorizontino', 'Oeste', 'Operário (PR)', 'Palmeiras', 'Paraná', 'Paulista', 'Paysandu', 'Ponte Preta', 'Portuguesa', 'RB Bragantino', 'Remo', 'Salgueiro', 'Sampaio Corrêa', 'Santa Cruz', 'Santo André', 'Santos', 'Sport', 'São Bento', 'São Caetano', 'São Raimundo', 'Tombense', 'Tupi', 'Vasco', 'Vila Nova','Vitória'];
+const ltimes = ['ABC', 'Amazonas', 'América-MG', 'América-RN', 'ASA', 'Athletic', 'Athletico-PR', 'Atlético-GO', 'Atlético-MG', 'Avaí', 'Bahia', 'Barueri', 'Boa', 'Botafogo', 'Botafogo-SP', 'Brasil de Pelotas', 'Brasiliense', 'Brusque', 'Campinense', 'Ceará', 'Chapecoense', 'Confiança', 'Corinthians', 'Coritiba', 'CRB', 'Criciúma', 'Cruzeiro', 'CSA', 'Cuiabá', 'Duque de Caxias', 'Ferroviária', 'Figueirense', 'Fortaleza', 'Gama', 'Goiás', 'Grêmio', 'Guarani', 'Guaratinguetá', 'Icasa', 'Internacional', 'Ipatinga', 'Ituano', 'Joinville', 'Juventude', 'Londrina', 'Luverdense', 'Macaé', 'Marília', 'Mirassol', 'Mogi Mirim', 'Náutico', 'Novorizontino', 'Oeste', 'Operário-PR', 'Palmeiras', 'Paraná', 'Paulista', 'Paysandu', 'Ponte Preta', 'Portuguesa', 'RB Bragantino', 'Remo', 'Salgueiro', 'Sampaio Corrêa', 'Santa Cruz', 'Santo André', 'Santos', 'Sport', 'São Bento', 'São Caetano', 'São Raimundo', 'Tombense', 'Tupi', 'Vasco', 'Vila Nova', 'Vitória', 'Volta Redonda'];
 
 const grp = {
-	'g12': ['Atlético (MG)', 'Botafogo', 'Corinthians', 'Cruzeiro', 'Grêmio', 'Internacional', 'Palmeiras', 'Santos', 'Vasco'],
+	'g12': ['Atlético-MG', 'Botafogo', 'Corinthians', 'Cruzeiro', 'Grêmio', 'Internacional', 'Palmeiras', 'Santos', 'Vasco'],
 	'elite': ['Corinthians', 'Cruzeiro', 'Internacional', 'Palmeiras', 'Santos', 'Vasco'],
-	'co': ['Atlético (GO)', 'Brasiliense', 'Cuiabá', 'Gama', 'Goiás', 'Luverdense', 'Vila Nova'],
-	'go': ['Atlético (GO)', 'Goiás', 'Vila Nova'],
+	'co': ['Atlético-GO', 'Brasiliense', 'Cuiabá', 'Gama', 'Goiás', 'Luverdense', 'Vila Nova'],
+	'go': ['Atlético-GO', 'Goiás', 'Vila Nova'],
 	'df': ['Brasiliense', 'Gama'],
   'mt': ['Cuiabá', 'Luverdense'],
-	'ne': ['América (RN)', 'ASA', 'ABC', 'Bahia', 'Campinense', 'Ceará', 'Confiança', 'CRB', 'CSA', 'Fortaleza', 'Icasa', 'Náutico', 'Salgueiro', 'Sampaio Corrêa', 'Santa Cruz', 'Sport', 'Vitória'],
+	'ne': ['América-RN', 'ASA', 'ABC', 'Bahia', 'Campinense', 'Ceará', 'Confiança', 'CRB', 'CSA', 'Fortaleza', 'Icasa', 'Náutico', 'Salgueiro', 'Sampaio Corrêa', 'Santa Cruz', 'Sport', 'Vitória'],
   'al': ['ASA', 'CRB', 'CSA'],
   'al2': ['CRB', 'CSA'],
 	'ba': ['Bahia', 'Vitória'],
@@ -17,21 +17,21 @@ const grp = {
   'pb': ['Campinense'],
 	'pe': ['Náutico', 'Salgueiro', 'Santa Cruz', 'Sport'],
 	'pe3': ['Náutico', 'Santa Cruz', 'Sport'],
-  'rn': ['ABC', 'América (RN)'],
+  'rn': ['ABC', 'América-RN'],
   'se': ['Confiança'],
 	'n': ['Amazonas', 'Paysandu', 'Remo', 'São Raimundo'],
   'am': ['Amazonas', 'São Raimundo'],
 	'pa': ['Paysandu', 'Remo'],
-	'sd': ['América (MG)', 'Atlético (MG)', 'Boa', 'Botafogo (SP)', 'Barueri', 'Botafogo', 'Corinthians', 'Cruzeiro', 'Duque de Caxias', 'Guarani', 'Guaratinguetá', 'Ipatinga', 'Ituano', 'Macaé', 'Marília', 'Mogi Mirim', 'Novorizontino', 'Oeste', 'Palmeiras', 'Paulista', 'Ponte Preta', 'Portuguesa', 'RB Bragantino', 'Santo André', 'Santos', 'São Bento', 'São Caetano', 'Tombense', 'Tupi', 'Vasco'],
-	'mg': ['América (MG)', 'Atlético (MG)', 'Boa', 'Cruzeiro', 'Ipatinga', 'Tombense', 'Tupi'],
-	'mg2': ['Atlético (MG)', 'Cruzeiro'],
-	'rj': ['Botafogo', 'Duque de Caxias', 'Macaé', 'Vasco'],
+	'sd': ['América-MG', 'Athletic', 'Atlético-MG', 'Boa', 'Botafogo-SP', 'Barueri', 'Botafogo', 'Corinthians', 'Cruzeiro', 'Duque de Caxias', 'Ferroviária', 'Guarani', 'Guaratinguetá', 'Ipatinga', 'Ituano', 'Macaé', 'Marília', 'Mogi Mirim', 'Novorizontino', 'Oeste', 'Palmeiras', 'Paulista', 'Ponte Preta', 'Portuguesa', 'RB Bragantino', 'Santo André', 'Santos', 'São Bento', 'São Caetano', 'Tombense', 'Tupi', 'Vasco', 'Volta Redonda'],
+	'mg': ['América-MG', 'Athletic', 'Atlético-MG', 'Boa', 'Cruzeiro', 'Ipatinga', 'Tombense', 'Tupi'],
+	'mg2': ['Atlético-MG', 'Cruzeiro'],
+	'rj': ['Botafogo', 'Duque de Caxias', 'Macaé', 'Vasco', 'Volta Redonda'],
 	'rj4': ['Botafogo', 'Vasco'],
-	'sp': ['Barueri', 'Botafogo (SP)', 'Corinthians', 'Guarani', 'Guaratinguetá', 'Ituano', 'Marília', 'Mirassol', 'Mogi Mirim', 'Novorizontino', 'Oeste', 'Palmeiras', 'Paulista', 'Ponte Preta', 'Portuguesa', 'RB Bragantino', 'Santo André', 'Santos', 'São Bento', 'São Caetano'],
+	'sp': ['Barueri', 'Botafogo-SP', 'Corinthians', 'Ferroviária', 'Guarani', 'Guaratinguetá', 'Ituano', 'Marília', 'Mirassol', 'Mogi Mirim', 'Novorizontino', 'Oeste', 'Palmeiras', 'Paulista', 'Ponte Preta', 'Portuguesa', 'RB Bragantino', 'Santo André', 'Santos', 'São Bento', 'São Caetano'],
 	'sp4': ['Corinthians', 'Palmeiras', 'Santos'],
-	's': ['Athletico (PR)', 'Avaí', 'Brasil de Pelotas', 'Brusque', 'Chapecoense', 'Coritiba', 'Criciúma', 'Figueirense', 'Grêmio', 'Internacional', 'Joinville', 'Juventude', 'Londrina', 'Operário (PR)', 'Paraná'],
-	'pr': ['Athletico (PR)', 'Coritiba', 'Londrina', 'Operário (PR)', 'Paraná'],
-	'pr2': ['Athletico (PR)', 'Coritiba'],
+	's': ['Athletico-PR', 'Avaí', 'Brasil de Pelotas', 'Brusque', 'Chapecoense', 'Coritiba', 'Criciúma', 'Figueirense', 'Grêmio', 'Internacional', 'Joinville', 'Juventude', 'Londrina', 'Operário-PR', 'Paraná'],
+	'pr': ['Athletico-PR', 'Coritiba', 'Londrina', 'Operário-PR', 'Paraná'],
+	'pr2': ['Athletico-PR', 'Coritiba'],
 	'rs': ['Brasil de Pelotas', 'Grêmio', 'Internacional', 'Juventude'],
 	'rs2': ['Grêmio', 'Internacional'],
 	'sc': ['Avaí', 'Brusque', 'Chapecoense', 'Criciúma', 'Figueirense', 'Joinville'],
@@ -39,8 +39,8 @@ const grp = {
 
 const classFinais = {
 	2006: {
-		'campeao': 'Atlético (MG)',
-		'classificados': ['Sport', 'Náutico', 'América (RN)'],
+		'campeao': 'Atlético-MG',
+		'classificados': ['Sport', 'Náutico', 'América-RN'],
 		'rebaixados': ['Paysandu', 'Guarani', 'São Raimundo', 'Vila Nova']
 	},
 	2007: {
@@ -55,13 +55,13 @@ const classFinais = {
 	},
 	2009: {
 		'campeao': 'Vasco',
-		'classificados': ['Guarani', 'Ceará', 'Atlético (GO)'],
+		'classificados': ['Guarani', 'Ceará', 'Atlético-GO'],
 		'rebaixados': ['Juventude', 'Fortaleza', 'Campinense', 'ABC']
 	},
 	2010: {
 		'campeao': 'Coritiba',
-		'classificados': ['Figueirense', 'Bahia', 'América (MG)'],
-		'rebaixados': ['Brasiliense', 'Santo André', 'Ipatinga', 'América (RN)']
+		'classificados': ['Figueirense', 'Bahia', 'América-MG'],
+		'rebaixados': ['Brasiliense', 'Santo André', 'Ipatinga', 'América-RN']
 	},
 	2011: {
 		'campeao': 'Portuguesa',
@@ -70,7 +70,7 @@ const classFinais = {
 	},
 	2012: {
 		'campeao': 'Goiás',
-		'classificados': ['Criciúma', 'Athletico (PR)', 'Vitória'],
+		'classificados': ['Criciúma', 'Athletico-PR', 'Vitória'],
 		'rebaixados': ['CRB', 'Guarani', 'Ipatinga', 'Barueri']
 	},
 	2013: {
@@ -81,20 +81,20 @@ const classFinais = {
 	2014: {
 		'campeao': 'Joinville',
 		'classificados': ['Ponte Preta', 'Vasco', 'Avaí'],
-		'rebaixados': ['América (RN)', 'Icasa', 'Vila Nova', 'Portuguesa']
+		'rebaixados': ['América-RN', 'Icasa', 'Vila Nova', 'Portuguesa']
 	},
 	2015: {
 		'campeao': 'Botafogo',
-		'classificados': ['Santa Cruz', 'Vitória', 'América (MG)'],
+		'classificados': ['Santa Cruz', 'Vitória', 'América-MG'],
 		'rebaixados': ['Macaé', 'ABC', 'Boa', 'Mogi Mirim']
 	},
 	2016: {
-		'campeao': 'Atlético (GO)',
+		'campeao': 'Atlético-GO',
 		'classificados': ['Avaí', 'Vasco', 'Bahia'],
 		'rebaixados': ['Joinville', 'Tupi', 'RB Bragantino', 'Sampaio Corrêa']
 	},
 	2017: {
-		'campeao': 'América (MG)',
+		'campeao': 'América-MG',
 		'classificados': ['Internacional', 'Ceará', 'Paraná'],
 		'rebaixados': ['Luverdense', 'Santa Cruz', 'ABC', 'Náutico']
 	},
@@ -105,13 +105,13 @@ const classFinais = {
 	},
 	2019: {
 		'campeao': 'RB Bragantino',
-		'classificados': ['Sport', 'Coritiba', 'Atlético (GO)'],
+		'classificados': ['Sport', 'Coritiba', 'Atlético-GO'],
 		'rebaixados': ['Londrina', 'São Bento', 'Criciúma', 'Vila Nova']
 	},
 	2020: {
 		'campeao': 'Chapecoense',
-		'classificados': ['América (MG)', 'Juventude', 'Cuiabá'],
-		'rebaixados': ['Figueirense', 'Paraná', 'Botafogo (SP)', 'Oeste']
+		'classificados': ['América-MG', 'Juventude', 'Cuiabá'],
+		'rebaixados': ['Figueirense', 'Paraná', 'Botafogo-SP', 'Oeste']
 	},
   2021: {
     'campeao': 'Botafogo',
@@ -121,17 +121,22 @@ const classFinais = {
   2022: {
     'campeao': 'Cruzeiro',
     'classificados': ['Grêmio', 'Bahia', 'Vasco'],
-    'rebaixados': ['CSA', 'Brusque', 'Operário (PR)', 'Náutico']
+    'rebaixados': ['CSA', 'Brusque', 'Operário-PR', 'Náutico']
   },
   2023: {
     'campeao': 'Vitória',
-    'classificados': ['Juventude', 'Criciúma', 'Atlético (GO)'],
+    'classificados': ['Juventude', 'Criciúma', 'Atlético-GO'],
     'rebaixados': ['Sampaio Corrêa', 'Tombense', 'Londrina', 'ABC']
   },
   2024: {
     'campeao': 'Santos',
     'classificados': ['Mirassol', 'Sport', 'Ceará'],
     'rebaixados': ['Ponte Preta', 'Ituano', 'Brusque', 'Guarani']
+  },
+  2025: {
+    'campeao': 'Coritiba',
+    'classificados': ['Athletico-PR', 'Chapecoense', 'Remo'],
+    'rebaixados': ['Ferroviária', 'Amazonas', 'Volta Redonda', 'Paysandu']
   },
 }
 
